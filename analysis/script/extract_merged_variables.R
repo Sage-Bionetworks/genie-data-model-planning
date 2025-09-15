@@ -1,3 +1,8 @@
+library(purrr)
+library(here)
+library(fs)
+purrr::walk(.x = fs::dir_ls(here('R')), .f = source)
+
 dir_merged <- here('data-raw', 'bpc', 'step2-merged')
 
 test_data <- readr::read_csv(
@@ -20,10 +25,12 @@ merged_cohorts <- dir(dir_merged)[stringr::str_detect(
 )] %>%
   tibble(file = .) %>%
   mutate(
-    path = here(dir_merged, file)
-  )
+    path = here(dir_merged, file),
+    cohort = str_replace(file, "BPCIntake.*", "")
+  ) %>%
+  select(cohort, path)
 
-# This takes a while because the REDcap export storage format is pointelessly sparse.  The resulting data will be about 5GB - absolutely rediculous.
+# This takes a while because the REDcap export storage format is pointlessly sparse.  The resulting data will be about 5GB - absolutely rediculous.
 merged_cohorts <- merged_cohorts %>%
   mutate(
     dat = purrr::map(
@@ -34,53 +41,24 @@ merged_cohorts <- merged_cohorts %>%
 
 lobstr::obj_size(merged_cohorts)
 
-# Takes a tibble and extracts some information about all the columns.
-var_extractor <- function(
-  dat,
-  missing_levels = ""
-) {
-  extra_wide <- dat %>%
-    summarize(
-      across(
-        .cols = everything(),
-        .fns = list(
-          SSEEPP_present = \(x) TRUE,
-          SSEEPP_n_vals = \(x) length(unique(x)),
-          SSEEPP_n_missing = \(x) sum(is.na(x) | x %in% missing_levels)
-        )
-      )
+merged_cohorts <- merged_cohorts %>%
+  mutate(
+    var_dat = purrr::map(
+      .x = dat,
+      .f = var_extractor
     )
-
-  extra_wide %>%
-    pivot_longer(cols = everything()) %>%
-    separate(col = name, into = c('var', 'colname'), sep = "_SSEEPP_") %>%
-    pivot_wider(
-      names_from = colname,
-      values_from = value
-    )
-}
-
-test_ext <- var_extractor(test_data)
-
-test_ext %>%
-  pivot_longer(cols = everything()) %>%
-  separate(col = name, into = c('var', 'colname'), sep = "_SSEEPP_") %>%
-  pivot_wider(
-    names_from = colname,
-    values_from = value
   )
 
+# Now delete that monstrosity and do a gc() to clear up some RAM (I think):
+merged_cohorts <- merged_cohorts %>%
+  select(-dat)
+gc()
 
-# Stub on trying to assign the data to datasets, which can probably be obviated by downloading the tables (whatever they were called)
-nest_data <- test_data %>%
-  nest(.by = redcap_repeat_instrument)
+merged_vardata <- merged_cohorts %>%
+  select(cohort, var_dat) %>%
+  unnest(var_dat)
 
-nest_data %>%
-  filter(redcap_repeat_instrument %in% "Prissmm Imaging") %>%
-  pull(data) %>%
-  .[[1]] %>%
-  map_dbl(
-    .x = .,
-    .f = \(x) mean(is.na(x))
-  )
-# Then filter down to the columns with less than 100% missingness to find the ones that are "really there".
+readr::write_rds(
+  merged_vardata,
+  file = here('data', 'bpc', 'step2-merged', 'vardata.rds')
+)

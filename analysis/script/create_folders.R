@@ -10,3 +10,8 @@ fs::dir_create(here('data-raw', 'bpc', 'step1-curated'))
 fs::dir_create(here('data-raw', 'bpc', 'step2-merged'))
 fs::dir_create(here('data-raw', 'bpc', 'step3-redacted'))
 fs::dir_create(here('data-raw', 'bpc', 'step4-release'))
+
+fs::dir_create(here('data', 'bpc', 'step1-curated'))
+fs::dir_create(here('data', 'bpc', 'step2-merged'))
+fs::dir_create(here('data', 'bpc', 'step3-redacted'))
+fs::dir_create(here('data', 'bpc', 'step4-release'))

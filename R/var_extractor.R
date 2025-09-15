@@ -21,5 +21,6 @@ var_extractor <- function(
     pivot_wider(
       names_from = colname,
       values_from = value
-    )
+    ) %>%
+    mutate(present = as.logical(present))
 }
