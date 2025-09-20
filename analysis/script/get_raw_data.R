@@ -101,20 +101,31 @@ save_table_as_csv <- function(
 }
 
 # for now I'm just going to save them by the table name.
-# it might make more sense to build on the form names.
-pmsks_index %>%
-  select(id, name, form)
-
-save_table_as_csv(
-  'syn21446700',
-  save_file = here(
-    'data-raw',
-    'bpc',
-    'step3-redacted',
-    'patient_characteristics.csv'
+# it might make more sense to build on the form names, but they're not unique
+pmsks_dl_list <- pmsks_index %>%
+  select(id, name) %>%
+  mutate(
+    save_name = (name %>%
+      tolower %>%
+      str_replace_all(., "- ", "") %>%
+      str_replace_all(., "[:blank:]", "_")),
+    save_file = here(
+      'data-raw',
+      'bpc',
+      'step3-redacted',
+      paste0(save_name, '.csv')
+    )
   )
+
+purrr::walk2(
+  .x = pmsks_dl_list$id,
+  .y = pmsks_dl_list$save_file,
+  .f = save_table_as_csv
 )
 
+cli::cli_abort(
+  'stopped here - the whole list of files may not download well, I have no idea.'
+)
 
 ###########
 # Release #
