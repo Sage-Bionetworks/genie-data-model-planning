@@ -13,6 +13,7 @@ released_list <- c(
 sor %>%
   filter(TYPE %in% "Derived") %>%
   filter(
+    # peppered tolower everywhere because the captialization seems to be all over generally
     tolower(`Shared for NSCLC 3.1-consortium Release`) %in%
       tolower(released_list) |
       tolower(`Shared for CRC v3.1 Consortium Release`) %in%

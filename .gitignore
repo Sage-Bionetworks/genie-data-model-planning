@@ -4,6 +4,7 @@
 .Ruserdata
 .DS_Store
 *.html
+*.png
 
 /data-raw/
 /data/

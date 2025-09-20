@@ -67,6 +67,55 @@ purrr::walk(
   merged_saver
 )
 
+############
+# pre-MSKS #
+############
+
+# Ready for the super clean URL for the synapse tables?
+synid_pmsks <- 'syn21446696'
+pmsks_index <- as_tibble(as.data.frame(synTableQuery(
+  query = paste0('select * from ', synid_pmsks)
+)))
+
+# Check that the table names are unique:
+if (any(duplicated(pmsks_index$name))) {
+  cli::cli_abort("Duplicated table names - need to resolve")
+}
+
+# clicked on the patient characteristics table, for example:
+
+test <- as.data.frame(
+  synTableQuery(
+    paste0('select * from ', 'syn21446700')
+  )
+)
+
+save_table_as_csv <- function(
+  synid,
+  save_file
+) {
+  dat <- as.data.frame(synTableQuery(
+    paste0('select * from ', synid)
+  ))
+  readr::write_rds(dat, save_file)
+}
+
+# for now I'm just going to save them by the table name.
+# it might make more sense to build on the form names.
+pmsks_index %>%
+  select(id, name, form)
+
+save_table_as_csv(
+  'syn21446700',
+  save_file = here(
+    'data-raw',
+    'bpc',
+    'step3-redacted',
+    'patient_characteristics.csv'
+  )
+)
+
+
 ###########
 # Release #
 ###########
