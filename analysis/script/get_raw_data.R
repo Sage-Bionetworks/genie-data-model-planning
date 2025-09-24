@@ -10,36 +10,82 @@ synLogin()
 # Curated data #
 ################
 
+# The code to pull all the cohort folders works, but it's a huge mess of headers
+#   and archived files and formatting history.  I don't want to mess with it.
+
 # folders in the curated folder which are not cohorts.
-curated_not_cohorts <- c('HACK - local validator', 'archive', 'retraction')
+# curated_not_cohorts <- c('HACK - local validator', 'archive', 'retraction')
+#
+# curated_dat <- get_syn_children_df('syn20852283') |>
+#   select(cohort = name, cohort_id = id) |>
+#   filter(!(cohort %in% curated_not_cohorts))
+#
+# # Go a level deeper to get the site folders.
+# curated_dat <- curated_dat |>
+#   mutate(
+#     children = map(.x = cohort_id, .f = get_syn_children_df)
+#   ) |>
+#   unnest(children) |>
+#   select(contains("cohort"), site = name, site_id = id) |>
+#   filter(!(site %in% c("archive", "SAGE")))
+#
+# # One more level for the subfolders
+# curated_dat <- curated_dat |>
+#   mutate(
+#     children = map(.x = site_id, .f = get_syn_children_df)
+#   ) |>
+#   unnest(children) |>
+#   select(
+#     contains("cohort"),
+#     contains("site"),
+#     subfolder = name,
+#     subfolder_id = id
+#   )
 
-curated_dat <- get_syn_children_df('syn20852283') |>
-  select(cohort = name, cohort_id = id) |>
-  filter(!(cohort %in% curated_not_cohorts))
+# We'll just do the NSCLC2 data as an example:
 
-# Go a level deeper to get the site folders.
-curated_dat <- curated_dat |>
+inst_ignore <- c('DUKE', 'PROV', 'SAGE', 'UCSF')
+
+curated_dat <- get_syn_children_df('syn27347603') |>
+  select(institution = name, inst_id = id) |>
   mutate(
-    children = map(.x = cohort_id, .f = get_syn_children_df)
+    children = map(.x = inst_id, .f = get_syn_children_df)
   ) |>
   unnest(children) |>
-  select(contains("cohort"), site = name, site_id = id) |>
-  filter(!(site %in% c("archive", "SAGE")))
+  select(contains("inst"), file = name, file_id = id)
 
-# One more level for the subfolders
-curated_dat <- curated_dat |>
-  mutate(
-    children = map(.x = site_id, .f = get_syn_children_df)
-  ) |>
-  unnest(children) |>
-  select(
-    contains("cohort"),
-    contains("site"),
-    subfolder = name,
-    subfolder_id = id
+curated_dat %<>%
+  filter(
+    !(institution %in% inst_ignore)
   )
 
-# Stopping here on the curated.  It's just a gigantic mess, good god.
+cur_saver <- function(
+  synid,
+  institution
+) {
+  cur_dir <- here(
+    "data-raw",
+    'bpc',
+    'step1-curated',
+    'NSCLC2',
+    # because we're defining this function in the context of a single release, this works even though cohort and release aren't arguments.
+    institution
+  )
+
+  fs::dir_create(cur_dir)
+  synGet(
+    entity = synid,
+    downloadLocation = cur_dir,
+    ifcollision = "overwrite.local"
+  )
+}
+
+
+purrr::walk2(
+  .x = curated_dat$file_id,
+  .y = curated_dat$institution,
+  .f = cur_saver
+)
 
 ##########
 # Merged #
@@ -97,8 +143,9 @@ save_table_as_csv <- function(
   dat <- as.data.frame(synTableQuery(
     paste0('select * from ', synid)
   ))
-  readr::write_rds(dat, save_file)
+  readr::write_csv(dat, save_file)
 }
+
 
 # for now I'm just going to save them by the table name.
 # it might make more sense to build on the form names, but they're not unique
@@ -121,10 +168,6 @@ purrr::walk2(
   .x = pmsks_dl_list$id,
   .y = pmsks_dl_list$save_file,
   .f = save_table_as_csv
-)
-
-cli::cli_abort(
-  'stopped here - the whole list of files may not download well, I have no idea.'
 )
 
 ###########
