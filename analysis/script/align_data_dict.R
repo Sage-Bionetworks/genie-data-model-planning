@@ -40,6 +40,7 @@ dat_dict <- readr::read_csv(
     valid_vals = `Choices, Calculations, OR Slider Labels`,
     required = `Required Field?`
   ) %>%
+  rename_all(~ stringr::str_replace_all(tolower(.x), " ", "_")) %>%
   mutate(
     required = if_else(required %in% "y", T, F) # fixing y/NA coding.
   )
@@ -71,13 +72,21 @@ stub_merge <- stub_vars %>%
   ungroup(.) %>%
   select(var, stub)
 
+# You only require the general variable type, not all the iterations of it.
+stub_merge %<>%
+  group_by(stub) %>%
+  arrange(var) %>%
+  mutate(.is_first = row_number() %in% 1) %>%
+  ungroup(.)
+
 stub_merge <- left_join(
   stub_merge,
   dat_dict,
   by = c(stub = 'field_name')
 ) %>%
-  select(-stub) %>%
-  rename(field_name = var)
+  rename(field_name = var) %>%
+  mutate(required = required & .is_first) %>%
+  select(-c(.is_first, stub))
 
 dat_dict <- bind_rows(
   dat_dict,
@@ -126,3 +135,6 @@ readr::write_rds(
   dat_dict,
   file = here('data', 'bpc', 'step1-curated', 'aligned_data_dictionary.rds')
 )
+
+# Next steps:  Start playing with pointblank.
+# The valid value set should now be accessible.  You will probably want to create a data structure to make those cleaner but we'll have to see what a good format for that is.
