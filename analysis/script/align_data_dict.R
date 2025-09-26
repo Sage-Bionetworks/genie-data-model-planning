@@ -15,7 +15,7 @@ all_redcap <-
     path = data_paths,
     colnames = purrr::map(
       .x = path,
-      .f = ~ colnames(readr::read_csv(.x))
+      .f = ~ colnames(readr::read_csv(.x, n_max = 1))
     )
   )
 
@@ -28,7 +28,7 @@ dat_dict <- readr::read_csv(
   here(
     'data-raw',
     'curated-manual',
-    'v388_PRISSMM_Dictionary_NSCLC_BPC_P2.csv'
+    "nonphi_v388_PRISSMM_Dictionary_NSCLC_BPC_P2.csv"
   )
 ) %>%
   # jeez these headers suck.
@@ -37,10 +37,14 @@ dat_dict <- readr::read_csv(
     form = `Form Name`,
     field_type = `Field Type`,
     # this isn't actually limited to valid values, there's calculations in here for some odd reason:
-    valid_vals = `Choices, Calculations, OR Slider Labels`,
+    choices_calc = `Choices, Calculations, OR Slider Labels`,
     required = `Required Field?`
   ) %>%
   rename_all(~ stringr::str_replace_all(tolower(.x), " ", "_")) %>%
+  rename_all(~ stringr::str_replace_all(tolower(.x), "\\?", "")) %>%
+  rename_all(
+    ~ stringr::str_replace_all(tolower(.x), "_\\(.*\\)", "")
+  ) %>%
   mutate(
     required = if_else(required %in% "y", T, F) # fixing y/NA coding.
   )
@@ -118,7 +122,13 @@ undefined_vars <- tribble(
 
 undefined_vars %<>%
   mutate(
-    field_note = "Not defined - this row was added to the data dictionary before QC."
+    field_note = "Not defined - this row was added to the data dictionary as a processing step",
+    field_type = case_when(
+      # the completeness checks use 1/2 encoding (assuming on the 1) so we need
+      #   to treat them differently than yesno columns.
+      str_detect(field_name, 'complete$') ~ 'complete_check',
+      T ~ 'text'
+    )
   )
 
 dat_dict <- bind_rows(
@@ -126,10 +136,96 @@ dat_dict <- bind_rows(
   undefined_vars
 )
 
+# Call me crazy but I'm going to declare the primary keys required too.
+dat_dict %<>%
+  mutate(
+    required = case_when(
+      field_name %in%
+        c('record_id', 'redcap_repeat_instrument', 'redcap_repeat_instance') ~
+        TRUE,
+      T ~ required
+    )
+  )
+
 # Between these two types of fixes everything is now in:
-if (length(setdiff(all_columns, dat_dict$field_name))) {
+if (length(setdiff(all_columns, dat_dict$field_name)) > 0) {
   stop("Unresolved data dictionary errors - please fix.")
 }
+
+dttm_cols <- c('pt', 'ca', 'drugs', 'rt', 'path', 'image', 'md')
+dttm_cols <- c(
+  paste0(dttm_cols, '_start_time'),
+  paste0(dttm_cols, '_stop_time')
+)
+
+date_cols <- c('cpt_seq_date', 'qa_full_date')
+
+num_cols <- c(
+  # all the interval columns:
+  "hybrid_death_int",
+  "last_oncvisit_int",
+  "last_alive_int",
+  "last_anyvisit_int",
+  "enroll_hospice_int",
+  "naaccr_diagnosis_int",
+  "naaccr_first_contact_int",
+  "ca_cadx_int",
+  "rt_start_int",
+  "rt_end_int",
+  "rt_rt_int",
+  "path_rep_int",
+  "path_proc_int",
+  "path_erprher_add1_int",
+  "path_erprher_add2_int",
+  "path_erprher_add3_int",
+  "path_erprher_add4_int",
+  "path_erprher_add5_int",
+  "image_scan_int",
+  "image_report_int",
+  "image_ref_scan_int",
+  "md_onc_visit_int",
+  "tm_spec_collect_int",
+  "cpt_order_int",
+  "cpt_report_int",
+
+  # and a few others:
+  'birth_year',
+  'rt_dose',
+  'rt_total_dose'
+)
+
+dat_dict %<>%
+  mutate(
+    col_read_type = case_when(
+      # The NAs are an odd bunch.  Some of the drug stuff is NA but it's mostly
+      #   the "complete" fields, which seem to use 1/2 coding rather than 0/1.
+      is.na(field_type) ~ 'char',
+      # This group is fundamentally categorical, but almost all are integers.  Could be read in as numeric or character reasonably.
+      field_type %in% c('checkbox', 'dropdown', 'radio', 'complete_check') ~
+        'char',
+      # This group is not categorical.
+      field_type %in% c('text') & field_name %in% num_cols ~ 'numeric',
+      field_type %in% c('text') & field_name %in% date_cols ~ 'date',
+      field_type %in% c('text') & field_name %in% dttm_cols ~ 'dttm',
+      field_type %in% c('text') ~ 'char',
+      field_type %in% 'yesno' ~ 'logical'
+    )
+  )
+
+
+dat_dict %<>%
+  mutate(
+    # the choices_calc field is missing some important stuff we'll want to check.
+    valid_val_str = case_when(
+      field_type %in% c('checkbox', 'dropdown', 'radio') ~ choices_calc,
+      field_type %in% 'yesno' ~ '0, No|1, Yes',
+      field_type %in% 'complete_check' ~ '1, No|2, Yes'
+    )
+  )
+
+# Splits the valid_val_str into more structured list columns for later use.
+dat_dict %<>%
+  split_valid_values(.)
 
 readr::write_rds(
   dat_dict,
