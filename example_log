@@ -1,0 +1,3 @@
+WARN  [2025-09-30 23:51:37] Step 9 exceeded the WARN failure threshold (f_failed = 1) ['col_exists']
+WARN  [2025-09-30 23:51:38] Step 37 exceeded the WARN failure threshold (f_failed = 6e-05) ['rows_distinct']
+WARN  [2025-09-30 23:51:40] Step 42 exceeded the WARN failure threshold (f_failed = 3e-05) ['col_vals_in_set']
