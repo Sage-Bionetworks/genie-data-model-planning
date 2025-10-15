@@ -7,6 +7,8 @@ dat_dict <- readr::read_rds(
   here('data', 'bpc', 'step1-curated', 'aligned_data_dictionary.rds')
 )
 
+curated_path <- here('data-raw', 'bpc', 'step1-curated', 'NSCLC2')
+
 dat_ex <- readr::read_csv(
   dir_ls(here(curated_path, "DFCI")),
   # read everything as a character at this stage:
