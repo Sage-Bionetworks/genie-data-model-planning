@@ -5,6 +5,9 @@
 .DS_Store
 *.html
 *.png
+*.css
+*.js
+*.woff
 
 /data-raw/
 /data/

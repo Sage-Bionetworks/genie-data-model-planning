@@ -18,7 +18,7 @@ make_agent_table_row <- function(
     all_passed = all_passed(interrogated_agent),
     # could probably combine the extracts and validation sets but not required now really.
     validation_subset = list(get_validation_subset(interrogated_agent)),
-    extracts = interrogated_agent$extracts,
+    extracts = list(interrogated_agent$extracts),
     time_start = interrogated_agent$time_start,
     time_end = interrogated_agent$time_end,
   )
@@ -31,11 +31,11 @@ get_validation_subset <- function(
 ) {
   intel_obj$validation_set %>%
     select(
-      i,
-      sha1,
       assertion_type,
       columns_expr,
       brief,
+      i,
       time_processed
+      # sha1 seemed useful too, removed it though as I'm not totally clear what the hash inputs are.
     )
 }

@@ -41,12 +41,14 @@ basil_sum <- make_agent_table_row(
 
 # lobstr::obj_sizes(!!!basil_sum) # coolest pattern ever.
 
-fs::dir_create(here('data', 'qc', site_to_qc))
+fs::dir_create(here('data', 'qc', site_to_qc, 'qc_results'))
 
 readr::write_rds(
   basil_sum,
-  here('data', 'qc', site_to_qc, 'qc_dat.rds')
+  here('data', 'qc', site_to_qc, 'qc_results', 'l0_space.rds')
 )
+
+# basil_intel
 
 # all_passed(basil_intel)
 # get_agent_report(hydra_intel, display_table = TRUE) # a gt table
