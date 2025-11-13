@@ -34,6 +34,7 @@ get_validation_subset <- function(
       assertion_type,
       columns_expr,
       brief,
+      label,
       i,
       time_processed
       # sha1 seemed useful too, removed it though as I'm not totally clear what the hash inputs are.

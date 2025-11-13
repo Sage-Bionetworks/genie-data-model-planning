@@ -15,14 +15,14 @@ dat_ex <- readr::read_csv(
   col_types = cols(.default = col_character())
 )
 
+cli_alert_danger('Adding errors for demonstration')
+
+dat_ex <- add_errors_for_demo(dat_ex)
+
+
 dat_dict <- readr::read_rds(
   here('data', 'bpc', 'step1-curated', 'aligned_data_dictionary.rds')
 )
-
-# Add a few problems for demonstration:
-dat_ex %<>% select(-drugs_stop_time) # remove one col
-dat_ex <- bind_rows(dat_ex, slice(dat_ex, 2039)) # one dupe row
-dat_ex[500, "ca_directed_radtx_complete"] <- "1" # one marked incomplete.
 
 # space because it's a sparse dataset, and basilisk because it causes death in those who look into it.
 basil_agent <- create_agent_space_basilisk(

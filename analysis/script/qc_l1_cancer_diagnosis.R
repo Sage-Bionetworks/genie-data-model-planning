@@ -30,9 +30,75 @@ ag <- add_valid_value_checks_to_agent(
   ptblank_agent = ag
 )
 
+ag <- ag %>%
+  col_vals_in_set(
+    columns = 'ca_type',
+    set = '51',
+    preconditions = ~ . %>% dplyr::filter(redcap_ca_index %in% '1'),
+    label = 'Index cancers are NSCLC (ca_type = 51).',
+    active = TRUE
+  )
+
+ag <- ag %>%
+  col_vals_in_set(
+    columns = 'redcap_ca_index',
+    set = '1',
+    preconditions = ~ . %>%
+      group_by(record_id) %>%
+      arrange(desc(redcap_ca_index)) %>%
+      slice(1) %>%
+      ungroup(.),
+    label = 'Each person has at least one index cancer in the cancer_diagnosis form',
+    active = TRUE
+  )
+
+ag <- ag %>%
+  col_vals_not_null(
+    columns = c('redcap_ca_seq', 'redcap_ca_index'),
+    label = "Cancer seq and index flag completed."
+  )
+
+ag <- ag %>%
+  rows_distinct(
+    columns = c('record_id, redcap_ca_seq'),
+    label = "Cancer seq numbers are unique (record_id and redcap_ca_seq form an alternate key)"
+  )
+
+add_stage_dx_iv <- function(dat) {
+  dat %>%
+    mutate(
+      stage_dx_iv = case_when(
+        !is.na(best_ajcc_stage_cd) &
+          str_sub(best_ajcc_stage_cd, 1, 1) %in% c("0", "O") ~
+          "Stage 0",
+        !is.na(best_ajcc_stage_cd) &
+          str_sub(best_ajcc_stage_cd, 1, 1) %in% "4" ~
+          "Stage IV",
+        !is.na(best_ajcc_stage_cd) ~ "Stage I-III",
+        ca_stage_iv %in% c("0", "No") ~ "Stage I-III",
+        ca_stage_iv %in% c("1", "Yes") ~ "Stage IV"
+      )
+    )
+}
+
+ag <- ag %>%
+  col_vals_not_null(
+    columns = c('ca_stage_iv'),
+    preconditions = ~ . %>%
+      dplyr::filter(redcap_ca_index %in% 1) %>%
+      dplyr::filter(is.na(best_ajcc_stage_cd)),
+
+    label = "ca_stage_iv is complete index cancers without best_ajcc_stage_cd"
+  )
+
 # Add other checks as needed here.
 
-ag_intel <- ag %>% pointblank::interrogate(progress = F)
+ag_intel <- ag %>%
+  pointblank::interrogate(
+    extract_failed = TRUE,
+    progress = F
+  )
+
 
 ag_sum <- make_agent_table_row(
   dat_dict = dat_dict,

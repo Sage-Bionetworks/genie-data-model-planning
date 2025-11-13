@@ -25,6 +25,7 @@ qc_res <- qc_res %>%
 list_issues <- function(
   val_sub,
   extracts,
+  report,
   key_cols = c(
     "record_id",
     "redcap_repeat_instrument",
@@ -32,13 +33,32 @@ list_issues <- function(
   )
 ) {
   if (length(extracts) > 0) {
-    rtn <- inner_join(
+    info_on_the_checks <- full_join(
       val_sub,
-      mutate(bind_rows(extracts, .id = 'i'), i = as.integer(i)),
-      by = 'i'
+      select(
+        report,
+        i,
+        type,
+        columns,
+        values,
+        precon
+      ),
+      by = 'i',
+      relationship = 'one-to-one'
     )
-    rtn %>%
-      select(all_of(colnames(val_sub)), all_of(key_cols))
+
+    failed_cases <- bind_rows(
+      extracts,
+      .id = 'i'
+    ) %>%
+      mutate(i = as.integer(i))
+
+    rtn <- inner_join(
+      select(failed_cases, i, all_of(key_cols)),
+      info_on_the_checks,
+      by = 'i',
+      relationship = 'many-to-one'
+    )
   } else {
     rtn <- NULL
   }
@@ -46,12 +66,21 @@ list_issues <- function(
   rtn
 }
 
+qc_test <- qc_res %>% filter(dat_name %in% "cancer_diagnosis")
+iss_test <- list_issues(
+  val_sub = qc_test$validation_subset[[1]],
+  extracts = qc_test$extracts[[1]],
+  report = qc_test$report[[1]]
+)
+
+
 qc_res %<>%
   mutate(
     issues = purrr::pmap(
       .l = list(
         val_sub = validation_subset,
-        extracts = extracts
+        extracts = extracts,
+        report = report
       ),
       .f = list_issues
     )
@@ -60,6 +89,22 @@ qc_res %<>%
 issues_list <- qc_res %>%
   select(qc_layer, dat_name, issues) %>%
   unnest(issues)
+
+issues_list %<>%
+  select(
+    qc_layer,
+    dat_name,
+    assertion_type, # same as "type"
+    asserted_values = values,
+    columns,
+    record_id,
+    redcap_repeat_instrument,
+    redcap_repeat_instance,
+    brief,
+    label,
+    time_processed,
+    agent_i = i
+  )
 
 
 dir_out <- here('data', 'qc', site_to_qc, 'qc_issues')

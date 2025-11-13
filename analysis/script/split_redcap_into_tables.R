@@ -17,6 +17,11 @@ dat_ex <- readr::read_csv(
   col_types = cols(.default = col_character())
 )
 
+cli_alert_danger('Adding errors for demonstration')
+
+dat_ex <- add_errors_for_demo(dat_ex)
+
+
 # the primary keys.
 vars_in_all_data <- c(
   'record_id',
