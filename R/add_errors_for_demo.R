@@ -19,6 +19,13 @@ add_errors_for_demo <- function(x) {
   x[sample(ca_ind_index, 5), 'redcap_ca_seq'] <- NA
   x[sample(ca_ind_index, 7), 'redcap_ca_index'] <- NA
 
+  img_index <- which(
+    x$redcap_repeat_instrument %in%
+      "prissmm_imaging"
+  )
+  # Add some missing dob to image intervals.
+  x[sample(img_index, 13), 'image_scan_int'] <- NA
+
   x %<>% drop_dots
 
   x

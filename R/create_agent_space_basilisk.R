@@ -51,7 +51,7 @@ create_agent_space_basilisk <- function(
     pointblank::col_vals_in_set(
       columns = comp_chk_cols,
       set = c("2", NA),
-      label = "Form marked complete"
+      label = "Form marked complete or column does not pertain to this form (NA)."
     )
 
   return(basil_agent)

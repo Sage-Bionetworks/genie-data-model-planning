@@ -101,7 +101,7 @@ ag_intel <- ag %>%
 
 
 ag_sum <- make_agent_table_row(
-  dat_dict = dat_dict,
+  dat_dict = dict_sub,
   interrogated_agent = ag_intel,
   qc_layer = 1,
   site_to_qc = site_to_qc
