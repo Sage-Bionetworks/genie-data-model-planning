@@ -26,6 +26,8 @@ source(here('analysis', 'script', 'qc_l1_prissmm_med_onc_assessment.R'))
 source(here('analysis', 'script', 'qc_l1_prissmm_tumor_marker.R'))
 source(here('analysis', 'script', 'qc_l1_cancer_panel_test.R'))
 
+source(here('analysis', 'script', 'layer_2_data_creation.R'))
+
 
 # Data splitting file
 # Other qc files

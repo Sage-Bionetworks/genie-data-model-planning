@@ -208,7 +208,8 @@ dat_dict %<>%
       field_type %in% c('text') & field_name %in% date_cols ~ 'date',
       field_type %in% c('text') & field_name %in% dttm_cols ~ 'dttm',
       field_type %in% c('text') ~ 'char',
-      field_type %in% 'yesno' ~ 'logical'
+      # it's a further manipulation to go to T/F from y/n, so we'll leave that for now:
+      field_type %in% 'yesno' ~ 'char'
     )
   )
 
