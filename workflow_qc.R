@@ -13,14 +13,18 @@ script_runner <- function(
 }
 
 # Config file loading:
-qc_config <- read_yaml(here('data-raw', 'qc_config_files', 'test_config.yaml'))
+qc_config <- read_yaml(here(
+  'data-raw',
+  'qc_config_files',
+  'her2_dfci_config.yml'
+))
 
 # Adds a date to the folder name if the config says to.
 qc_config <- folder_date_update(qc_config)
 storage_setup(store_dir = qc_config$storage_root)
 
 
-script_runner('get_raw_data_qc.R') # not required to do all this.
+script_runner('get_raw_data_qc.R')
 
 # Different workflow not requiring the release analysis:
 script_runner('align_data_dict.R')
@@ -39,6 +43,9 @@ script_runner('qc_l1_prissmm_imaging.R')
 script_runner('qc_l1_prissmm_med_onc_assessment.R')
 script_runner('qc_l1_prissmm_tumor_marker.R')
 script_runner('qc_l1_cancer_panel_test.R')
+
+# For now I'm just going to look manually here:
+display_results_summary(path(qc_config$storage_root, 'result'))
 
 # Create the layer 2 datasets:
 script_runner('layer_2_data_creation.R')

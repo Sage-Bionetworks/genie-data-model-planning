@@ -5,18 +5,7 @@ purrr::walk(.x = fs::dir_ls(here("R")), .f = source)
 
 qc_res_dir <- path(qc_config$storage_root, 'result')
 
-qc_res <- tibble(
-  file = dir(qc_res_dir),
-) %>%
-  mutate(
-    path = path(qc_res_dir, file),
-    dat_name = str_sub(file, 4, -5),
-    dat_qc_res = purrr::map(.x = path, .f = readr::read_rds)
-  )
-
-qc_res <- qc_res %>%
-  select(dat_qc_res) %>%
-  unnest(dat_qc_res)
+qc_res <- pull_all_results(qc_res_dir)
 
 # For now all the datasets
 # qc_test <- qc_res %>% filter(dat_name %in% "cancer_diagnosis")

@@ -1,8 +1,14 @@
 add_valid_value_checks_to_agent <- function(
   data_dict,
-  ptblank_agent
+  ptblank_agent,
+  limit_to_included_cols = T
 ) {
-  valid_val_numeric_code_field_sets <- dict_sub %>%
+  if (limit_to_included_cols) {
+    cn <- ptblank_agent$tbl %>% colnames(.)
+    data_dict %<>% filter(field_name %in% cn)
+  }
+
+  valid_val_numeric_code_field_sets <- data_dict %>%
     filter(!is.na(valid_val_str)) %>%
     group_by(valid_val_key_code) %>%
     summarize(field_names = list(c(field_name)))

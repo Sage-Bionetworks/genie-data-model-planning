@@ -90,6 +90,13 @@ ag <- ag %>%
     label = "ca_stage_iv is complete index cancers without best_ajcc_stage_cd"
   )
 
+
+ag <- ag %>%
+  col_vals_not_null(
+    columns = c('redcap_ca_seq'),
+    label = "redcap_ca_seq is not blank for any rows."
+  )
+
 # Add other checks as needed here.
 
 ag_intel <- ag %>%

@@ -5,11 +5,16 @@ purrr::walk(.x = fs::dir_ls(here("R")), .f = source)
 
 synLogin()
 
-syn_proj_files <- get_syn_children_df(qc_config$syn_id_inst_folder)
-
-if (nrow(syn_proj_files) > 1) {
-  cli_alert_danger("More than one file in the folder - check this.")
-}
+data_file_synid <-
+  if (!is.null(qc_config$syn_data$syn_id_inst_file)) {
+    qc_config$syn_data$syn_id_inst_file
+  } else {
+    syn_proj_files <- get_syn_children_df(qc_config$syn_id_inst_folder)
+    if (nrow(syn_proj_files) > 1) {
+      cli_alert_danger("More than one file in the folder - check this.")
+    }
+    syn_proj_files$id
+  }
 
 cur_saver <- function(
   synid
@@ -29,7 +34,7 @@ cur_saver <- function(
 }
 
 cur_saver(
-  synid = syn_proj_files$id
+  synid = data_file_synid
 )
 
 dd_saver <- function(
