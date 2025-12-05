@@ -3,22 +3,15 @@ library(purrr)
 library(here)
 purrr::walk(.x = fs::dir_ls(here("R")), .f = source)
 
-site_to_qc <- "DFCI"
-
 dat_dict <- readr::read_rds(
-  here('data', 'bpc', 'step1-curated', 'aligned_data_dictionary.rds')
+  path(qc_config$storage_root, 'dict', 'aligned', 'dd.rds')
 )
 
-curated_path <- here('data-raw', 'bpc', 'step1-curated', 'NSCLC2')
-
 dat_ex <- readr::read_csv(
-  dir_ls(here(curated_path, site_to_qc)),
+  dir_ls(path(qc_config$storage_root, 'data', 'l0_raw_redcap')),
   # read everything as a character at this stage:
   col_types = cols(.default = col_character())
 )
-
-# cli_alert_danger('Adding errors for demonstration')
-# dat_ex <- add_errors_for_demo(dat_ex)
 
 # the primary keys.
 vars_in_all_data <- c(
@@ -77,20 +70,11 @@ nested_dd %<>%
     )
   )
 
+out_dir_l1 <- path(qc_config$storage_root, 'data', 'l1_split')
+fs::dir_create(out_dir_l1)
+
 # It's actually more convenient for me to save this as a list dataframe.
 readr::write_rds(
   x = nested_dd,
-  file = here('data', 'qc', 'DFCI', 'layer_1_datasets', 'nested_l1.rds')
+  file = path(out_dir_l1, 'nested_l1.rds')
 )
-
-# But if you wanted to instead save individual files no problem, just do:
-# purrr::walk2(
-#   .x = nested_dd$tab,
-#   .y = nested_dd$form_in_extract,
-#   .f = \(x, y) {
-#     readr::write_rds(
-#       x = x,
-#       file = here('data', 'qc', 'DFCI', 'layer_1_datasets', paste0(y, '.rds'))
-#     )
-#   }
-# )

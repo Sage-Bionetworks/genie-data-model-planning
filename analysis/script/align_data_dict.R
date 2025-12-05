@@ -3,33 +3,18 @@ library(purrr)
 library(here)
 purrr::walk(.x = fs::dir_ls(here("R")), .f = source)
 
-library(stringdist)
-
+# library(stringdist)
 
 # Just as an example, MSK NSCLC2 data
-curated_path <- here('data-raw', 'bpc', 'step1-curated', 'NSCLC2')
-data_paths <- purrr::map(.x = dir_ls(curated_path), dir_ls)
+curated_path <- dir_ls(path(qc_config$storage_root, 'data', 'l0_raw_redcap'))
+dd_path <- dir_ls(path(qc_config$storage_root, 'dict', 'raw'))
 
-all_redcap <-
-  tibble(
-    path = data_paths,
-    colnames = purrr::map(
-      .x = path,
-      .f = ~ colnames(readr::read_csv(.x, n_max = 1))
-    )
-  )
-
-all_columns <- purrr::reduce(
-  .x = all_redcap$colnames,
-  .f = union
-)
+all_columns <- curated_path %>%
+  readr::read_csv(., n_max = 1) %>%
+  colnames(.)
 
 dat_dict <- readr::read_csv(
-  here(
-    'data-raw',
-    'curated-manual',
-    "nonphi_v388_PRISSMM_Dictionary_NSCLC_BPC_P2.csv"
-  )
+  dd_path
 ) %>%
   # jeez these headers suck.
   rename(
@@ -229,10 +214,10 @@ dat_dict %<>%
 dat_dict %<>%
   split_valid_values(.)
 
+out_path <- path(qc_config$storage_root, 'dict', 'aligned')
+fs::dir_create(out_path)
+
 readr::write_rds(
   dat_dict,
-  file = here('data', 'bpc', 'step1-curated', 'aligned_data_dictionary.rds')
+  file = here(qc_config$storage_root, 'dict', 'aligned', 'dd.rds')
 )
-
-# Next steps:  Start playing with pointblank.
-# The valid value set should now be accessible.  You will probably want to create a data structure to make those cleaner but we'll have to see what a good format for that is.

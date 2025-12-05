@@ -2,12 +2,11 @@
 # This includes derived variables, variable typing, etc.
 purrr::walk(.x = fs::dir_ls(here::here("R")), .f = source)
 
-site_to_qc <- "DFCI"
-dir_output <- here('data', 'qc', site_to_qc, 'layer_2_datasets')
-fs::dir_create(dir_output)
+dir_output_l2 <- path(qc_config$storage_root, 'data', 'l2_derived')
+fs::dir_create(dir_output_l2)
 
 nested_dat <- readr::read_rds(
-  here('data', 'qc', site_to_qc, 'layer_1_datasets', 'nested_l1.rds')
+  path(qc_config$storage_root, 'data', 'l1_split', 'nested_l1.rds')
 )
 
 extract_help <- function(nd, form, to_extract = 'tab') {
@@ -45,7 +44,7 @@ derived_ca_dx <- derive_ca_dx(
 )
 readr::write_rds(
   derived_ca_dx,
-  here(dir_output, 'ca_all.rds')
+  path(dir_output_l2, 'ca_all.rds')
 )
 
 # To split into index and nonindex cases we just do a filter:
@@ -58,11 +57,11 @@ ca_non_ind <- derived_ca_dx %>%
 # Note: there are some that have redcap_ca_index NA - not sure what's up there.
 readr::write_rds(
   ca_ind,
-  here(dir_output, 'ca_ind.rds')
+  path(dir_output_l2, 'ca_ind.rds')
 )
 readr::write_rds(
   ca_non_ind,
-  here(dir_output, 'ca_non_ind.rds')
+  path(dir_output_l2, 'ca_non_ind.rds')
 )
 
 
@@ -86,7 +85,7 @@ derived_pt <- derive_pt(
 )
 readr::write_rds(
   derived_pt,
-  here(dir_output, 'pt.rds')
+  path(dir_output_l2, 'pt.rds')
 )
 
 
@@ -110,7 +109,7 @@ derived_reg <- derive_reg(
 )
 readr::write_rds(
   derived_reg,
-  here(dir_output, 'reg.rds')
+  path(dir_output_l2, 'reg.rds')
 )
 
 #############
@@ -133,7 +132,7 @@ derived_rad <- derive_rad(
 )
 readr::write_rds(
   derived_rad,
-  here(dir_output, 'rad.rds')
+  path(dir_output_l2, 'rad.rds')
 )
 
 
@@ -157,7 +156,7 @@ derived_path <- derive_path(
 )
 readr::write_rds(
   derived_path,
-  here(dir_output, 'path.rds')
+  path(dir_output_l2, 'path.rds')
 )
 
 
@@ -181,7 +180,7 @@ derived_img <- derive_img(
 )
 readr::write_rds(
   derived_img,
-  here(dir_output, 'img.rds')
+  path(dir_output_l2, 'img.rds')
 )
 
 ###########
@@ -204,7 +203,7 @@ derived_med_onc <- derive_med_onc(
 )
 readr::write_rds(
   derived_med_onc,
-  here(dir_output, 'med_onc.rds')
+  path(dir_output_l2, 'med_onc.rds')
 )
 
 # While the tumor marker data is specified in the data dictionary, its got zero rows in the data.
@@ -229,5 +228,5 @@ derived_cpt <- derive_cpt(
 )
 readr::write_rds(
   derived_cpt,
-  here(dir_output, 'cpt.rds')
+  path(dir_output_l2, 'cpt.rds')
 )

@@ -12,13 +12,19 @@ script_runner <- function(
   invisible(name)
 }
 
+# Config file loading:
+qc_config <- read_yaml(here('data-raw', 'qc_config_files', 'test_config.yaml'))
 
-script_runner('create_folders.R')
-# script_runner('get_raw_data.R') # not required to do all this.
+# Adds a date to the folder name if the config says to.
+qc_config <- folder_date_update(qc_config)
+storage_setup(store_dir = qc_config$storage_root)
+
+
+script_runner('get_raw_data_qc.R') # not required to do all this.
 
 # Different workflow not requiring the release analysis:
 script_runner('align_data_dict.R')
-script_runner('qc_space_basilisk.R')
+script_runner('qc_l0_raw_redcap.R')
 script_runner('split_redcap_into_tables.R')
 
 # Probably add a check here that the splitting went OK.
@@ -42,6 +48,7 @@ script_runner('layer_2_data_creation.R')
 script_runner('qc_l3_cpt_LJ_ca_all.R')
 script_runner('qc_l3_rad_LJ_ca_all.R')
 script_runner('qc_l3_reg_LJ_ca_all.R')
+script_runner('qc_l3_pt_FJ_ca_ind.R')
 
 
 script_runner('summarize_testing.R')

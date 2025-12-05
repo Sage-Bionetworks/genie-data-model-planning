@@ -16,34 +16,6 @@ reg <- readr::read_rds(here(dir_l2, 'reg.rds'))
 
 rr_vec <- c('record_id', 'redcap_ca_seq')
 
-# yikes.  gotta write a script to process drugs_ca into multiple rows.
-cpt_LJ_ca_all <- dplyr::left_join(
-  cpt,
-  (ca_all %>%
-    mutate(row_exists.ca_all = T) %>%
-    select(all_of(rr_vec), row_exists.ca_all)),
-  by = rr_vec,
-  suffix = c('.cpt', '.ca_all'),
-  relationship = 'many-to-one'
-)
-
-# cpt_LJ_ca_all %>% count(redcap_repeat_instrument.ca_all)
-#
-# cpt_LJ_ca_all %>%
-#   filter(is.na(redcap_repeat_instrument.ca_all)) %>%
-#   select(record_id, redcap_ca_seq)
-
-# These are real errors!  cancer sequence 1 doesn't link to cancer sequence NA, sorry, that's not a tolerable fault.
-
-reg_LJ_ca_all <- dplyr::left_join(
-  reg,
-  (ca_all %>%
-    mutate(row_exists.ca_all = T) %>%
-    select(all_of(rr_vec), row_exists.ca_all)),
-  by = rr_vec,
-  suffix = c('.reg', '.ca_all'),
-  relationship = 'many-to-one'
-)
 
 rad_LJ_ca_all <- dplyr::left_join(
   rad,

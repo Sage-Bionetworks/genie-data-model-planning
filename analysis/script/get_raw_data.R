@@ -46,7 +46,7 @@ synLogin()
 
 inst_ignore <- c('DUKE', 'PROV', 'SAGE', 'UCSF')
 
-curated_dat <- get_syn_children_df('syn27347603') |>
+curated_dat <- get_syn_children_df(i) |>
   select(institution = name, inst_id = id) |>
   mutate(
     children = map(.x = inst_id, .f = get_syn_children_df)

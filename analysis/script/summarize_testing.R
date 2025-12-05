@@ -3,15 +3,13 @@ library(purrr)
 library(here)
 purrr::walk(.x = fs::dir_ls(here("R")), .f = source)
 
-site_to_qc <- "DFCI"
-
-qc_res_dir <- here('data', 'qc', site_to_qc, 'qc_results')
+qc_res_dir <- path(qc_config$storage_root, 'result')
 
 qc_res <- tibble(
   file = dir(qc_res_dir),
 ) %>%
   mutate(
-    path = here(qc_res_dir, file),
+    path = path(qc_res_dir, file),
     dat_name = str_sub(file, 4, -5),
     dat_qc_res = purrr::map(.x = path, .f = readr::read_rds)
   )
@@ -79,13 +77,21 @@ issues_list %<>%
   )
 
 
-dir_out <- here('data', 'qc', site_to_qc, 'qc_issues')
-fs::dir_create(dir_out)
+dir_out <- path(qc_config$storage_root, 'output')
 
+# take the last folder name in the path to help track versions later:
+last_folder_name <- str_extract(qc_config$storage_root, '[^\\/]*$')
+
+fs::dir_create(qc_config$storage_root, 'output', 'issues')
 readr::write_excel_csv(
   issues_list,
   # could add the date or something if desired for uniqueness.
-  here(dir_out, paste0(site_to_qc, '_issues.csv')),
+  path(
+    qc_config$storage_root,
+    'output',
+    'issues',
+    paste0(last_folder_name, '_issues.csv')
+  ),
   na = ""
 )
 
@@ -94,8 +100,14 @@ tests_run <- qc_res %>%
   select(qc_layer, site, dat_name, validation_subset) %>%
   unnest(validation_subset)
 
+fs::dir_create(qc_config$storage_root, 'output', 'tests_run')
 readr::write_excel_csv(
   tests_run,
-  here(dir_out, paste0(site_to_qc, '_tests_run.csv')),
+  path(
+    qc_config$storage_root,
+    'output',
+    'tests_run',
+    paste0(last_folder_name, '_tests_run.csv')
+  ),
   na = ""
 )

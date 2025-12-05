@@ -3,11 +3,10 @@ library(purrr)
 library(here)
 purrr::walk(.x = fs::dir_ls(here("R")), .f = source)
 
-site_to_qc <- "DFCI"
 current_form <- 'cancer_panel_test'
 
 nested_dat <- readr::read_rds(
-  here('data', 'qc', site_to_qc, 'layer_1_datasets', 'nested_l1.rds')
+  path(qc_config$storage_root, 'data', 'l1_split', 'nested_l1.rds')
 )
 
 dict_sub <- nested_dat %>%
@@ -38,16 +37,14 @@ ag_sum <- make_agent_table_row(
   dat_dict = dict_sub,
   interrogated_agent = ag_intel,
   qc_layer = 1,
-  site_to_qc = site_to_qc
+  site_to_qc = qc_config$inst
 )
 
 readr::write_rds(
   ag_sum,
-  here(
-    'data',
-    'qc',
-    site_to_qc,
-    'qc_results',
+  path(
+    qc_config$storage_root,
+    'result',
     paste0('l1_', current_form, '.rds')
   )
 )

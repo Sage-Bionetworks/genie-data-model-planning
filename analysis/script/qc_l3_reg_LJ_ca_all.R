@@ -3,11 +3,10 @@ library(purrr)
 library(here)
 purrr::walk(.x = fs::dir_ls(here("R")), .f = source)
 
-site_to_qc <- "DFCI"
 qc_layer <- 3
 qc_data_name <- 'reg_LJ_ca_all'
 
-dir_l2 <- here('data', 'qc', 'DFCI', 'layer_2_datasets')
+dir_l2 <- path(qc_config$storage_root, 'data', 'l2_derived')
 ca_all <- readr::read_rds(here(dir_l2, 'ca_all.rds'))
 reg <- readr::read_rds(here(dir_l2, 'reg.rds'))
 
@@ -44,16 +43,14 @@ ag_sum <- make_agent_table_row(
   dat_dict = NULL,
   interrogated_agent = ag_intel,
   qc_layer = qc_layer,
-  site_to_qc = site_to_qc
+  site_to_qc = qc_config$inst
 )
 
 readr::write_rds(
   ag_sum,
-  here(
-    'data',
-    'qc',
-    site_to_qc,
-    'qc_results',
+  path(
+    qc_config$storage_root,
+    'result',
     glue('l{qc_layer}_{qc_data_name}.rds')
   )
 )
