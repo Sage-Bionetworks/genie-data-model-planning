@@ -40,6 +40,24 @@ qc_res %<>%
     )
   )
 
+# some manual fixing of output types here:
+qc_res %<>%
+  mutate(
+    issues = purrr::map(
+      .x = issues,
+      .f = \(x) {
+        if (is.null(x)) {
+          x
+        } else {
+          x %>%
+            mutate(
+              redcap_repeat_instance = as.numeric(redcap_repeat_instance)
+            )
+        }
+      }
+    )
+  )
+
 issues_list <- qc_res %>%
   select(qc_layer, dat_name, issues) %>%
   unnest(issues)

@@ -5,30 +5,43 @@ library(purrr)
 library(here)
 purrr::walk(.x = fs::dir_ls(here("R")), .f = source)
 
-source(here('analysis', 'script', 'create_folders.R'))
-source(here('analysis', 'script', 'get_raw_data.R')) # not required to do all this.
+script_runner <- function(
+  name
+) {
+  source(here('analysis', 'script', name))
+  invisible(name)
+}
+
+
+script_runner('create_folders.R')
+# script_runner('get_raw_data.R') # not required to do all this.
 
 # Different workflow not requiring the release analysis:
-source(here('analysis', 'script', 'align_data_dict.R'))
-source(here('analysis', 'script', 'qc_space_basilisk.R'))
-source(here('analysis', 'script', 'split_redcap_into_tables.R'))
+script_runner('align_data_dict.R')
+script_runner('qc_space_basilisk.R')
+script_runner('split_redcap_into_tables.R')
 
 # Probably add a check here that the splitting went OK.
 
 # Layer 1 checks:
-source(here('analysis', 'script', 'qc_l1_patient.R'))
-source(here('analysis', 'script', 'qc_l1_cancer_diagnosis.R'))
-source(here('analysis', 'script', 'qc_l1_ca_directed_drugs.R'))
-source(here('analysis', 'script', 'qc_l1_ca_directed_radtx.R'))
-source(here('analysis', 'script', 'qc_l1_prissmm_pathology.R'))
-source(here('analysis', 'script', 'qc_l1_prissmm_imaging.R'))
-source(here('analysis', 'script', 'qc_l1_prissmm_med_onc_assessment.R'))
-source(here('analysis', 'script', 'qc_l1_prissmm_tumor_marker.R'))
-source(here('analysis', 'script', 'qc_l1_cancer_panel_test.R'))
+script_runner('qc_l1_patient.R')
+script_runner('qc_l1_cancer_diagnosis.R')
+script_runner('qc_l1_ca_directed_drugs.R')
+script_runner('qc_l1_ca_directed_radtx.R')
+script_runner('qc_l1_prissmm_pathology.R')
+script_runner('qc_l1_prissmm_imaging.R')
+script_runner('qc_l1_prissmm_med_onc_assessment.R')
+script_runner('qc_l1_prissmm_tumor_marker.R')
+script_runner('qc_l1_cancer_panel_test.R')
 
-source(here('analysis', 'script', 'layer_2_data_creation.R'))
+# Create the layer 2 datasets:
+script_runner('layer_2_data_creation.R')
+
+# It's valid but probably not common to add level 2 dataset issues if needed.
+
+script_runner('qc_l3_cpt_LJ_ca_all.R')
+script_runner('qc_l3_rad_LJ_ca_all.R')
+script_runner('qc_l3_reg_LJ_ca_all.R')
 
 
-# Data splitting file
-# Other qc files
-source(here('analysis', 'script', 'generate_issues.R'))
+script_runner('summarize_testing.R')

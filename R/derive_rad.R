@@ -9,5 +9,7 @@ derive_rad <- function(
     dict = dat_dict_sub
   )
 
+  rtn %<>% drugs_ca_rearrangement(., prefix = "^rt_ca")
+
   return(rtn)
 }

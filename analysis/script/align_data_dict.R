@@ -161,6 +161,7 @@ dttm_cols <- c(
 date_cols <- c('cpt_seq_date', 'qa_full_date')
 
 num_cols <- c(
+  'redcap_ca_seq',
   # all the interval columns:
   "hybrid_death_int",
   "last_oncvisit_int",

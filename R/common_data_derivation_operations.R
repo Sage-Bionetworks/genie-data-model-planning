@@ -1,8 +1,14 @@
 common_data_derivation_operations <- function(
   dat,
   dict,
-  print_cols = F
+  print_cols = F,
+  exclude_cols = NULL
 ) {
+  if (!is.null(exclude_cols)) {
+    dict %<>%
+      filter(!field_name %in% exclude_cols)
+  }
+
   rtn <- convert_dat_num2val(
     dict = dict,
     dat = dat,

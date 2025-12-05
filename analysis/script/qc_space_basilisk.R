@@ -15,10 +15,8 @@ dat_ex <- readr::read_csv(
   col_types = cols(.default = col_character())
 )
 
-cli_alert_danger('Adding errors for demonstration')
-
-dat_ex <- add_errors_for_demo(dat_ex)
-
+# cli_alert_danger('Adding errors for demonstration')
+# dat_ex <- add_errors_for_demo(dat_ex)
 
 dat_dict <- readr::read_rds(
   here('data', 'bpc', 'step1-curated', 'aligned_data_dictionary.rds')

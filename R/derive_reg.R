@@ -9,6 +9,8 @@ derive_reg <- function(
     dict = dat_dict_sub
   )
 
+  rtn %<>% drugs_ca_rearrangement(., prefix = '^drugs_ca')
+
   # Notes:
   # probably need remove _mask columns too - but not yet.
   return(rtn)

@@ -25,6 +25,47 @@ extract_help <- function(nd, form, to_extract = 'tab') {
 # These functions, such as derive_ca_dx() are bound to become monstrously large over time.
 # If we call them in some massive purrr call it will probably get in the way of diagnosis as we work.
 
+#############################
+# Cancer tables (index/non) #
+#############################
+
+proto_ca_dx <- extract_help(
+  nd = nested_dat,
+  form = 'cancer_diagnosis',
+  to_extract = 'tab'
+)
+proto_ca_dx_dd <- extract_help(
+  nd = nested_dat,
+  form = 'cancer_diagnosis',
+  to_extract = 'dd'
+)
+derived_ca_dx <- derive_ca_dx(
+  tab = proto_ca_dx,
+  dat_dict_sub = proto_ca_dx_dd
+)
+readr::write_rds(
+  derived_ca_dx,
+  here(dir_output, 'ca_all.rds')
+)
+
+# To split into index and nonindex cases we just do a filter:
+ca_ind <- derived_ca_dx %>%
+  filter(redcap_ca_index %in% "Yes") %>%
+  select(-redcap_ca_index)
+ca_non_ind <- derived_ca_dx %>%
+  filter(redcap_ca_index %in% "No") %>%
+  select(-redcap_ca_index)
+# Note: there are some that have redcap_ca_index NA - not sure what's up there.
+readr::write_rds(
+  ca_ind,
+  here(dir_output, 'ca_ind.rds')
+)
+readr::write_rds(
+  ca_non_ind,
+  here(dir_output, 'ca_non_ind.rds')
+)
+
+
 ###########
 # Patient #
 ###########
@@ -46,41 +87,6 @@ derived_pt <- derive_pt(
 readr::write_rds(
   derived_pt,
   here(dir_output, 'pt.rds')
-)
-
-#############################
-# Cancer tables (index/non) #
-#############################
-
-proto_ca_dx <- extract_help(
-  nd = nested_dat,
-  form = 'cancer_diagnosis',
-  to_extract = 'tab'
-)
-proto_ca_dx_dd <- extract_help(
-  nd = nested_dat,
-  form = 'cancer_diagnosis',
-  to_extract = 'dd'
-)
-derived_ca_dx <- derive_ca_dx(
-  tab = proto_ca_dx,
-  dat_dict_sub = proto_ca_dx_dd
-)
-# To split into index and nonindex cases we just do a filter:
-ca_ind <- derived_ca_dx %>%
-  filter(redcap_ca_index %in% "Yes") %>%
-  select(-redcap_ca_index)
-ca_non_ind <- derived_ca_dx %>%
-  filter(redcap_ca_index %in% "No") %>%
-  select(-redcap_ca_index)
-# Note: there are some that have redcap_ca_index NA - not sure what's up there.
-readr::write_rds(
-  ca_ind,
-  here(dir_output, 'ca_ind.rds')
-)
-readr::write_rds(
-  ca_non_ind,
-  here(dir_output, 'ca_non_ind.rds')
 )
 
 
