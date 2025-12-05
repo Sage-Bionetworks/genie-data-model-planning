@@ -57,5 +57,7 @@ script_runner('qc_l3_rad_LJ_ca_all.R')
 script_runner('qc_l3_reg_LJ_ca_all.R')
 script_runner('qc_l3_pt_FJ_ca_ind.R')
 
+display_results_summary(path(qc_config$storage_root, 'result'))
+
 
 script_runner('summarize_testing.R')
