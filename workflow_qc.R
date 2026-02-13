@@ -13,10 +13,13 @@ script_runner <- function(
 }
 
 # Config file loading:
+qc_conf_file <- 'her2_dfci_config.yml'
+#qc_conf_file <- 'her2_msk_config.yml'
+
 qc_config <- read_yaml(here(
   'data-raw',
   'qc_config_files',
-  'her2_dfci_config.yml'
+  qc_conf_file
 ))
 
 # Adds a date to the folder name if the config says to.
@@ -53,11 +56,10 @@ script_runner('layer_2_data_creation.R')
 # It's valid but probably not common to add level 2 dataset issues if needed.
 
 script_runner('qc_l3_cpt_LJ_ca_all.R')
-script_runner('qc_l3_rad_LJ_ca_all.R')
+script_runner('qc_l3_rad_LJ_ca_ind.R')
 script_runner('qc_l3_reg_LJ_ca_all.R')
 script_runner('qc_l3_pt_FJ_ca_ind.R')
 
 display_results_summary(path(qc_config$storage_root, 'result'))
-
 
 script_runner('summarize_testing.R')

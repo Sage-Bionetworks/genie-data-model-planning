@@ -24,7 +24,8 @@ rad_LJ_ca_all <- dplyr::left_join(
 
 ag <- agent_start(
   dat = rad_LJ_ca_all,
-  table_name = qc_data_name
+  table_name = qc_data_name,
+  add_standard_unique = F # we don't expect the join cols to have this.
 )
 
 ag <- ag %>%

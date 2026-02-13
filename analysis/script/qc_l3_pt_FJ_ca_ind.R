@@ -26,7 +26,8 @@ pt_FJ_ca_ind <- dplyr::full_join(
 
 ag <- agent_start(
   dat = pt_FJ_ca_ind,
-  table_name = qc_data_name
+  table_name = qc_data_name,
+  add_standard_unique = F
 )
 
 ag <- ag %>%

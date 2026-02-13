@@ -11,6 +11,14 @@ derive_reg <- function(
 
   rtn %<>% drugs_ca_rearrangement(., prefix = '^drugs_ca')
 
+  rtn %<>%
+    mutate(
+      across(
+        .cols = matches('^drugs_(start|end|last)dt_int_'),
+        .fns = as.numeric
+      )
+    )
+
   # Notes:
   # probably need remove _mask columns too - but not yet.
   return(rtn)

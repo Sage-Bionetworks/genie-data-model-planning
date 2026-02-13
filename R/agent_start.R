@@ -2,11 +2,7 @@ agent_start <- function(
   dat,
   table_name,
   log_file = NULL,
-  unique_row_def = c(
-    'record_id',
-    'redcap_repeat_instrument',
-    'redcap_repeat_instance'
-  )
+  add_standard_unique = T
 ) {
   if (is.null(log_file)) {
     cust_act_lev <- action_levels(
@@ -27,14 +23,18 @@ agent_start <- function(
     pointblank::create_agent(
       tbl_name = table_name,
       actions = cust_act_lev
-    ) %>%
-    pointblank::rows_distinct(
-      columns = c(
-        'record_id',
-        'redcap_repeat_instrument',
-        'redcap_repeat_instance'
-      )
     )
+
+  if (add_standard_unique) {
+    cust_agent <- cust_agent %>%
+      pointblank::rows_distinct(
+        columns = c(
+          'record_id',
+          'redcap_repeat_instrument',
+          'redcap_repeat_instance'
+        )
+      )
+  }
 
   return(cust_agent)
 }
