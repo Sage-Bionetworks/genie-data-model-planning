@@ -11,6 +11,7 @@ dd_path <- dir_ls(path(qc_config$storage_root, 'dict', 'raw'))
 
 all_columns <- curated_path %>%
   readr::read_csv(., n_max = 1) %>%
+  trim_nameless_cols(.) %>%
   colnames(.)
 
 dat_dict <- readr::read_csv(
@@ -32,6 +33,17 @@ dat_dict <- readr::read_csv(
   ) %>%
   mutate(
     required = if_else(required %in% "y", T, F) # fixing y/NA coding.
+  )
+
+# The checkbox columns have a shadow value of 0 which is presumably allowed.  We will add it to the valid values here.
+checkbox_cols <- dat_dict %>%
+  filter(field_type %in% "checkbox") %>%
+  pull(field_name)
+dat_dict <- dat_dict %>%
+  mutate(
+    choices_calc = case_when(
+      field_type %in% 'checkbox' ~ paste0('0, 0 |', choices_calc)
+    )
   )
 
 # Lets see if we can find a match for all the double underscore fields.

@@ -4,6 +4,7 @@ list_issues <- function(
   val_sub,
   extracts,
   report,
+  report_observed,
   key_cols = c(
     "record_id",
     "redcap_repeat_instrument",
@@ -32,7 +33,8 @@ list_issues <- function(
       mutate(i = as.integer(i))
 
     rtn <- inner_join(
-      select(failed_cases, i, all_of(key_cols)),
+      failed_cases
+      #select(failed_cases, i, all_of(key_cols)),
       info_on_the_checks,
       by = 'i',
       relationship = 'many-to-one'

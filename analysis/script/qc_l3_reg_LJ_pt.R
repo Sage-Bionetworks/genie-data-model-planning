@@ -28,10 +28,19 @@ ag <- agent_start(
 )
 
 ag <- ag %>%
-  col_vals_lt(
-    columns = 'drugs_startdt_int_2",
-    columns = ,
-    label = 'Cancer diagosis entry exists for every row of regimen data.'
+  col_vals_lte(
+    columns = matches('^drugs_(start|end|last)dt_int_'),
+    value = vars(last_alive_int),
+    label = 'Regimen interval variable is <= the last alive interval from pt data.',
+    na_pass = T
+  )
+
+ag <- ag %>%
+  col_vals_lte(
+    columns = matches('^drugs_(start|end|last)dt_int_'),
+    value = vars(hybrid_death_int),
+    label = 'Regimen interval variable is <= the hybrid death interval from pt data.',
+    na_pass = T
   )
 
 ag_intel <- ag %>%

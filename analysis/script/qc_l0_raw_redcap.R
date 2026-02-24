@@ -9,7 +9,8 @@ dat_ex <- readr::read_csv(
   dir_ls(path(qc_config$storage_root, 'data', 'l0_raw_redcap')),
   # read everything as a character at this stage:
   col_types = cols(.default = col_character())
-)
+) %>%
+  trim_nameless_cols(.)
 
 dat_dict <- readr::read_rds(
   path(qc_config$storage_root, 'dict', 'aligned', 'dd.rds')
@@ -30,6 +31,14 @@ basil_sum <- make_agent_table_row(
   site_to_qc = qc_config$inst
 )
 
+
+basil_sum %>%
+  pull(validation_subset) %>%
+  .[[1]]
+# data rows where the problems occured:
+basil_sum %>%
+  pull(extracts) %>%
+  .[[1]]
 # lobstr::obj_sizes(!!!basil_sum) # coolest pattern ever.
 
 readr::write_rds(

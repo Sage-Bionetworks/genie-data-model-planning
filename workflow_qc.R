@@ -13,8 +13,11 @@ script_runner <- function(
 }
 
 # Config file loading:
-qc_conf_file <- 'her2_dfci_config.yml'
-#qc_conf_file <- 'her2_msk_config.yml'
+# qc_conf_file <- 'her2_dfci_config.yml'
+# qc_conf_file <- 'her2_msk_config.yml'
+# qc_conf_file <- 'her2_colu_config.yml'
+# qc_conf_file <- 'her2_ucsf_config.yml'
+qc_conf_file <- 'her2_prov_config.yml'
 
 qc_config <- read_yaml(here(
   'data-raw',
@@ -32,6 +35,8 @@ script_runner('get_raw_data_qc.R')
 # Different workflow not requiring the release analysis:
 script_runner('align_data_dict.R')
 script_runner('qc_l0_raw_redcap.R')
+display_results_summary(path(qc_config$storage_root, 'result'))
+
 script_runner('split_redcap_into_tables.R')
 
 # Probably add a check here that the splitting went OK.
@@ -44,7 +49,8 @@ script_runner('qc_l1_ca_directed_radtx.R')
 script_runner('qc_l1_prissmm_pathology.R')
 script_runner('qc_l1_prissmm_imaging.R')
 script_runner('qc_l1_prissmm_med_onc_assessment.R')
-script_runner('qc_l1_prissmm_tumor_marker.R')
+# Don't think this exsists for this project:
+# script_runner('qc_l1_prissmm_tumor_marker.R')
 script_runner('qc_l1_cancer_panel_test.R')
 
 # For now I'm just going to look manually here:
@@ -59,6 +65,7 @@ script_runner('qc_l3_cpt_LJ_ca_all.R')
 script_runner('qc_l3_rad_LJ_ca_ind.R')
 script_runner('qc_l3_reg_LJ_ca_all.R')
 script_runner('qc_l3_pt_FJ_ca_ind.R')
+script_runner('qc_l3_reg_LJ_pt.R')
 
 display_results_summary(path(qc_config$storage_root, 'result'))
 
