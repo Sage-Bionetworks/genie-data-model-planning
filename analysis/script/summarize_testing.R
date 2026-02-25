@@ -62,7 +62,8 @@ issues_list %<>%
     brief,
     label,
     time_processed,
-    agent_i = i
+    agent_i = i,
+    any_of('observed_value')
   )
 
 
@@ -78,7 +79,6 @@ readr::write_excel_csv(
   path(
     qc_config$storage_root,
     'output',
-    'issues',
     paste0(last_folder_name, '_issues.csv')
   ),
   na = ""
@@ -95,8 +95,17 @@ readr::write_excel_csv(
   path(
     qc_config$storage_root,
     'output',
-    'tests_run',
     paste0(last_folder_name, '_tests_run.csv')
   ),
   na = ""
+)
+
+# make a copy of the excel template with a proper name and place.
+fs::file_copy(
+  path = here('data-raw', 'qc_site_template.xlsx'),
+  new_path = path(
+    qc_config$storage_root,
+    'output',
+    paste0(last_folder_name, '_issues.xlsx')
+  )
 )

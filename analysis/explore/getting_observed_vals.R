@@ -51,20 +51,20 @@ rtn_dat[2, 'columns'] <- 'something_not_in_data'
 
 rtn_dat <- rtn_dat %>%
   mutate(.temp_row_id = row_number()) %>%
-  nest(., .by = .temp_row_id) %>%
+  nest(., .by = .temp_row_id, .key = 'one_row_dat') %>%
   mutate(
-    data = map(
-      data,
+    one_row_dat = map(
+      one_row_dat,
       ~ mutate(., .obs_val = .[[columns]])
     )
   ) %>%
-  unnest(data)
+  unnest(one_row_dat)
 
 rtn_dat <- rtn_dat %>%
   mutate(
     observed_value = case_when(
-      is.na(obs_val) ~ "(not_applicable)",
-      T ~ glue('{columns}:{obs_val}')
+      is.na(.obs_val) ~ "(not_applicable)",
+      T ~ glue('{columns}:{.obs_val}')
     )
   ) %>%
   pull(observed_value)
