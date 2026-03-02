@@ -16,12 +16,17 @@ pull_all_results <- function(result_dir) {
 }
 
 
-display_results_summary <- function(result_dir) {
+display_results_summary <- function(result_dir, type = 'return') {
   rtn <- pull_all_results(result_dir)
 
-  rtn %>%
-    select(qc_layer, site, dat_name, all_passed) %>%
-    print(.)
+  rtn %<>% select(qc_layer, site, dat_name, all_passed)
 
-  invisible(result_dir)
+  if (type %in% 'return') {
+    return(rtn)
+  } else {
+    rtn %>%
+      print(.)
+
+    invisible(result_dir)
+  }
 }

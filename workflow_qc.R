@@ -14,10 +14,10 @@ script_runner <- function(
 
 # Config file loading:
 # qc_conf_file <- 'her2_dfci_config.yml'
-# qc_conf_file <- 'her2_msk_config.yml'
+qc_conf_file <- 'her2_msk_config.yml'
 # qc_conf_file <- 'her2_colu_config.yml'
 # qc_conf_file <- 'her2_ucsf_config.yml'
-qc_conf_file <- 'her2_prov_config.yml'
+# qc_conf_file <- 'her2_prov_config.yml'
 
 qc_config <- read_yaml(here(
   'data-raw',
@@ -35,7 +35,6 @@ script_runner('get_raw_data_qc.R')
 # Different workflow not requiring the release analysis:
 script_runner('align_data_dict.R')
 script_runner('qc_l0_raw_redcap.R')
-display_results_summary(path(qc_config$storage_root, 'result'))
 
 script_runner('split_redcap_into_tables.R')
 
@@ -54,7 +53,16 @@ script_runner('qc_l1_prissmm_med_onc_assessment.R')
 script_runner('qc_l1_cancer_panel_test.R')
 
 # For now I'm just going to look manually here:
-display_results_summary(path(qc_config$storage_root, 'result'))
+layer_one_sum <- display_results_summary(path(qc_config$storage_root, 'result'))
+cli::cli_progress_message("Summary after QC layer 1:")
+print(layer_one_sum)
+if (any(!layer_one_sum$all_passed)) {
+  script_runner('summarize_testing.R')
+  cli::cli_abort("Summarizing and stopping at QC layer 1, errors found.")
+} else {
+  cli::cli_alert_success("QC layer 1 passed.")
+}
+
 
 # Create the layer 2 datasets:
 script_runner('layer_2_data_creation.R')
@@ -67,6 +75,15 @@ script_runner('qc_l3_reg_LJ_ca_all.R')
 script_runner('qc_l3_pt_FJ_ca_ind.R')
 script_runner('qc_l3_reg_LJ_pt.R')
 
-display_results_summary(path(qc_config$storage_root, 'result'))
-
-script_runner('summarize_testing.R')
+layer_three_sum <- display_results_summary(path(
+  qc_config$storage_root,
+  'result'
+))
+cli::cli_progress_message("Summary after QC layer 3:")
+print(layer_three_sum)
+if (any(!layer_three_sum$all_passed)) {
+  script_runner('summarize_testing.R')
+  cli::cli_abort("Errors found in QC layer 3 - see issue summary.")
+} else {
+  cli::cli_alert_success("No issues found!")
+}

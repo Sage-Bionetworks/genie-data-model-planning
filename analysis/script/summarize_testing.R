@@ -51,21 +51,26 @@ issues_list <- qc_res %>%
 
 issues_list %<>%
   select(
-    qc_layer,
-    dat_name,
-    assertion_type, # same as "type"
-    asserted_values = values,
-    columns,
     record_id,
     redcap_repeat_instrument,
     redcap_repeat_instance,
+    any_of('observed_value'),
     brief,
     label,
-    time_processed,
-    agent_i = i,
-    any_of('observed_value')
+    columns,
+    assertion_type,
+    asserted_values = values,
+    columns,
+    dat_name,
+    qc_layer,
+    date_generated = time_processed
   )
 
+issues_list %<>%
+  mutate(
+    date_generated = as_date(date_generated),
+    date_generated = format(date_generated, '%Y-%b-%d')
+  )
 
 dir_out <- path(qc_config$storage_root, 'output')
 
@@ -101,11 +106,30 @@ readr::write_excel_csv(
 )
 
 # make a copy of the excel template with a proper name and place.
-fs::file_copy(
-  path = here('data-raw', 'qc_site_template.xlsx'),
-  new_path = path(
-    qc_config$storage_root,
-    'output',
-    paste0(last_folder_name, '_issues.xlsx')
-  )
+template_path <- path(
+  qc_config$storage_root,
+  'output',
+  paste0(last_folder_name, '_issues.xlsx')
 )
+if (!fs::file_exists(template_path)) {
+  fs::file_copy(
+    path = here('data-raw', 'qc_site_template.xlsx'),
+    new_path = template_path
+  )
+} else {
+  # designed to avoid overwritting manual edits that take time.
+  cli_warn("Issues template exists already - skipping paste.")
+}
+
+# Produce an issue count for each subject
+issues_list %>%
+  count(record_id, name = "issue_count") %>%
+  readr::write_excel_csv(
+    .,
+    path(
+      qc_config$storage_root,
+      'output',
+      paste0(last_folder_name, '_issue_counts.csv')
+    ),
+    na = ""
+  )

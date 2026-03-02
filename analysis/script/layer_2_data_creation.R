@@ -1,6 +1,8 @@
 # Layer 2 is the derived versions of the split data.
 # This includes derived variables, variable typing, etc.
+library(geniedv)
 purrr::walk(.x = fs::dir_ls(here::here("R")), .f = source)
+library(fs)
 
 dir_output_l2 <- path(qc_config$storage_root, 'data', 'l2_derived')
 fs::dir_create(dir_output_l2)
@@ -38,8 +40,8 @@ proto_ca_dx_dd <- extract_help(
   form = 'cancer_diagnosis',
   to_extract = 'dd'
 )
-derived_ca_dx <- derive_ca_dx(
-  tab = proto_ca_dx,
+derived_ca_dx <- geniedv::derive_ca_dx(
+  raw_ca_dx = proto_ca_dx,
   dat_dict_sub = proto_ca_dx_dd
 )
 readr::write_rds(
