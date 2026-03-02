@@ -13,14 +13,7 @@ dat_ex <- readr::read_csv(
   col_types = cols(.default = col_character())
 )
 
-
 nested_dd <- redcap_splitter(redcap_data = dat_ex, dict = dat_dict)
-
-nested_dd_old <- readr::read_rds(
-  '/Users/apaynter/main/projects/genie/bayer_qc/MSK-2026-02-25/data/l1_split/nested_l1.rds'
-)
-
-waldo::compare(nested_dd, nested_dd_old)
 
 out_dir_l1 <- path(qc_config$storage_root, 'data', 'l1_split')
 fs::dir_create(out_dir_l1)
