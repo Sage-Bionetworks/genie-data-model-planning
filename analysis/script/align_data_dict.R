@@ -14,37 +14,83 @@ all_columns <- curated_path %>%
   trim_nameless_cols(.) %>%
   colnames(.)
 
-dat_dict <- readr::read_csv(
-  dd_path
-) %>%
-  # jeez these headers suck.
-  rename(
-    field_name = `Variable / Field Name`,
-    form = `Form Name`,
-    field_type = `Field Type`,
-    # this isn't actually limited to valid values, there's calculations in here for some odd reason:
-    choices_calc = `Choices, Calculations, OR Slider Labels`,
-    required = `Required Field?`
+
+dd_readr <- function(dat_dict_path) {
+  dat_dict <- readr::read_csv(
+    dat_dict_path
   ) %>%
-  rename_all(~ stringr::str_replace_all(tolower(.x), " ", "_")) %>%
-  rename_all(~ stringr::str_replace_all(tolower(.x), "\\?", "")) %>%
-  rename_all(
-    ~ stringr::str_replace_all(tolower(.x), "_\\(.*\\)", "")
-  ) %>%
-  mutate(
-    required = if_else(required %in% "y", T, F) # fixing y/NA coding.
-  )
+    # jeez these headers suck.
+    rename(
+      field_name = `Variable / Field Name`,
+      form = `Form Name`,
+      field_type = `Field Type`,
+      # this isn't actually limited to valid values, there's calculations in here for some odd reason:
+      choices_calc = `Choices, Calculations, OR Slider Labels`,
+      required = `Required Field?`
+    ) %>%
+    rename_all(~ stringr::str_replace_all(tolower(.x), " ", "_")) %>%
+    rename_all(~ stringr::str_replace_all(tolower(.x), "\\?", "")) %>%
+    rename_all(
+      ~ stringr::str_replace_all(tolower(.x), "_\\(.*\\)", "")
+    ) %>%
+    mutate(
+      required = if_else(required %in% "y", T, F) # fixing y/NA coding.
+    )
+
+  dat_dict <- dat_dict %>%
+    mutate(
+      choices_calc = case_when(
+        field_type %in% 'checkbox' ~ paste0('0, 0 |', choices_calc)
+      )
+    )
+
+  return(dat_dict)
+}
+
+align_data_dictionary <- function(
+  path_to_cur_dat,
+  path_to_dat_dict
+) {
+  dat_dict <- dd_readr(dd_path)
+  dat_dict
+}
+
+align_data_dictionary(
+  path_to_cur_dat = curated_path,
+  path_to_dat_dict = dd_path
+)
+
+# dat_dict <- readr::read_csv(
+#   dd_path
+# ) %>%
+#   # jeez these headers suck.
+#   rename(
+#     field_name = `Variable / Field Name`,
+#     form = `Form Name`,
+#     field_type = `Field Type`,
+#     # this isn't actually limited to valid values, there's calculations in here for some odd reason:
+#     choices_calc = `Choices, Calculations, OR Slider Labels`,
+#     required = `Required Field?`
+#   ) %>%
+#   rename_all(~ stringr::str_replace_all(tolower(.x), " ", "_")) %>%
+#   rename_all(~ stringr::str_replace_all(tolower(.x), "\\?", "")) %>%
+#   rename_all(
+#     ~ stringr::str_replace_all(tolower(.x), "_\\(.*\\)", "")
+#   ) %>%
+#   mutate(
+#     required = if_else(required %in% "y", T, F) # fixing y/NA coding.
+#   )
 
 # The checkbox columns have a shadow value of 0 which is presumably allowed.  We will add it to the valid values here.
 checkbox_cols <- dat_dict %>%
   filter(field_type %in% "checkbox") %>%
   pull(field_name)
-dat_dict <- dat_dict %>%
-  mutate(
-    choices_calc = case_when(
-      field_type %in% 'checkbox' ~ paste0('0, 0 |', choices_calc)
-    )
-  )
+# dat_dict <- dat_dict %>%
+#   mutate(
+#     choices_calc = case_when(
+#       field_type %in% 'checkbox' ~ paste0('0, 0 |', choices_calc)
+#     )
+#   )
 
 # Lets see if we can find a match for all the double underscore fields.
 stub_vars <- tibble(
