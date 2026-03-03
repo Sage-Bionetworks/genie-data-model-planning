@@ -14,11 +14,10 @@ aligned_dd <- align_data_dictionary(
   path_to_dat_dict = dd_path
 )
 
-
 out_path <- path(qc_config$storage_root, 'dict', 'aligned')
 fs::dir_create(out_path)
 
 readr::write_rds(
-  aligned_dd
+  aligned_dd,
   file = here(qc_config$storage_root, 'dict', 'aligned', 'dd.rds')
 )
