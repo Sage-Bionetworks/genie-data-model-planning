@@ -84,7 +84,7 @@ readr::write_excel_csv(
   path(
     qc_config$storage_root,
     'output',
-    paste0(last_folder_name, '_issues.csv')
+    paste0(last_folder_name, '_issues_internal.csv')
   ),
   na = ""
 )
