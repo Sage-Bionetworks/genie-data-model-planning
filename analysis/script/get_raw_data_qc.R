@@ -16,6 +16,11 @@ data_file_synid <-
     syn_proj_files$id
   }
 
+cli::cli_alert_info(
+  "File for {qc_config$inst} last modified on {synGet(data_file_synid)$properties$modifiedOn}"
+)
+
+
 cur_saver <- function(
   synid
 ) {

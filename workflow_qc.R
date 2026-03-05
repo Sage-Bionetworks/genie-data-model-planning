@@ -14,10 +14,10 @@ script_runner <- function(
 
 # Config file loading:
 # qc_conf_file <- 'her2_dfci_config.yml'
-qc_conf_file <- 'her2_msk_config.yml'
+# qc_conf_file <- 'her2_msk_config.yml'
 # qc_conf_file <- 'her2_colu_config.yml'
 # qc_conf_file <- 'her2_ucsf_config.yml'
-# qc_conf_file <- 'her2_prov_config.yml'
+qc_conf_file <- 'her2_prov_config.yml'
 
 qc_config <- read_yaml(here(
   'data-raw',
