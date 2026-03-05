@@ -77,7 +77,6 @@ dir_out <- path(qc_config$storage_root, 'output')
 # take the last folder name in the path to help track versions later:
 last_folder_name <- str_extract(qc_config$storage_root, '[^\\/]*$')
 
-fs::dir_create(qc_config$storage_root, 'output', 'issues')
 readr::write_excel_csv(
   issues_list,
   # could add the date or something if desired for uniqueness.
@@ -94,7 +93,6 @@ tests_run <- qc_res %>%
   select(qc_layer, site, dat_name, validation_subset) %>%
   unnest(validation_subset)
 
-fs::dir_create(qc_config$storage_root, 'output', 'tests_run')
 readr::write_excel_csv(
   tests_run,
   path(
