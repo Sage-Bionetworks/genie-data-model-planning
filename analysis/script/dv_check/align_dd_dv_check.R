@@ -12,6 +12,8 @@ dd_path <- here(
 cur_stub <- here('data-raw', 'bpc', 'step1-curated', 'NSCLC2')
 
 alignment_manifest <- tibble(
+  site = c('DFCI', 'MSK', 'UHN', 'VICC'),
+  # data dictionary is going in to test the "should never happen" case when we have different data dictionaries for two different sites.
   dd_path = dd_path,
   cur_path = c(
     path(cur_stub, 'DFCI', '2024-01-30 NSCLC Phase 2 New Submission.csv'),
@@ -25,21 +27,24 @@ alignment_manifest <- tibble(
   )
 )
 
-aligned_test <- align_data_dictionary(
-  path_to_cur_dat = alignment_manifest$cur_path[[1]],
-  path_to_dat_dict = alignment_manifest$dd_path[[1]]
-)
+# aligned_test <- align_data_dictionary(
+#   path_to_cur_dat = alignment_manifest$cur_path[[1]],
+#   path_to_dat_dict = alignment_manifest$dd_path[[1]]
+# )
 
+aligned_dd <- alignment_manifest %>%
+  mutate(
+    aligned_dd = purrr::map2(
+      .x = cur_path,
+      .y = dd_path,
+      .f = align_data_dictionary
+    )
+  )
 
-aligned_dd <- align_data_dictionary(
-  path_to_cur_dat = curated_path,
-  path_to_dat_dict = dd_path
-)
-
-out_path <- path(qc_config$storage_root, 'dict', 'aligned')
+out_path <- path('data', 'dv', 'aligned_dd')
 fs::dir_create(out_path)
 
 readr::write_rds(
   aligned_dd,
-  file = here(qc_config$storage_root, 'dict', 'aligned', 'dd.rds')
+  file = here(out_path, 'dd_nested.rds')
 )

@@ -19,5 +19,5 @@ fs::dir_create(out_path)
 
 readr::write_rds(
   aligned_dd,
-  file = here(qc_config$storage_root, 'dict', 'aligned', 'dd.rds')
+  file = here(out_path, 'dd.rds')
 )
