@@ -13,6 +13,8 @@ script_runner <- function(
 }
 
 script_runner('align_dd_dv_check.R')
+script_runner('split_all_redcaps.R')
+
 
 # Step 1: create derived variable datasets:
 

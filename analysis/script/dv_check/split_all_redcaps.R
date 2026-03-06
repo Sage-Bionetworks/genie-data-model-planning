@@ -3,6 +3,9 @@ library(purrr)
 library(here)
 purrr::walk(.x = fs::dir_ls(here("R")), .f = source)
 
+
+cur_stub <- here('data-raw', 'bpc', 'step1-curated', 'NSCLC2')
+
 # manual entry on these...
 cur_dat_org <- tribble(
   ~phase,
@@ -11,19 +14,23 @@ cur_dat_org <- tribble(
 
   2,
   'DFCI',
-  'data-raw/bpc/step1-curated/NSCLC2/DFCI/CopyOf2024-01-30 NSCLC Phase 2 New Submission.csv',
+  path(cur_stub, 'DFCI', '2024-01-30 NSCLC Phase 2 New Submission.csv'),
 
   2,
   'MSK',
-  'data-raw/bpc/step1-curated/NSCLC2/MSK/CopyOfBPC_MSK_NSCLCPh2_Full Cohort_09-May-2025.csv',
+  path(cur_stub, 'MSK', 'BPC_MSK_NSCLCPh2_Full Cohort_09-May-2025.csv'),
 
   2,
   'UHN',
-  'data-raw/bpc/step1-curated/NSCLC2/UHN/CopyOfUHN NSCLC Phase 2 Cohort Production Post Comples Queries Round 1.csv',
+  path(
+    cur_stub,
+    'UHN',
+    'UHN NSCLC Phase 2 Cohort Production Post Comples Queries Round 1.csv'
+  ),
 
   2,
   'VICC',
-  'data-raw/bpc/step1-curated/NSCLC2/VICC/CopyOfVICC_GENIEBPCNSCLCPhase2_20240824_reviewed.csv'
+  path(cur_stub, 'VICC', 'VICC_GENIEBPCNSCLCPhase2_20240824_reviewed.csv')
 )
 
 
