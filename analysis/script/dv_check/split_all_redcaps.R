@@ -30,10 +30,21 @@ readr::write_rds(
   here(out_dir, 'nested_splits.rds')
 )
 
-out_dir_l1 <- path(qc_config$storage_root, 'data', 'l1_split')
-fs::dir_create(out_dir_l1)
+multisite_tables <- cur_dat_mani %>%
+  # keeping site temporarily just to have unique rows.
+  select(site, nested_split_data) %>%
+  unnest(nested_split_data) %>%
+  select(site, form_in_extract, tab)
 
-readr::write_rds(
-  x = nested_dd,
-  file = path(out_dir_l1, 'nested_l1.rds')
-)
+cli_abort('error still below')
+
+# This fails:
+multisite_tables %>%
+  group_by(form_in_extract) %>%
+  summarize(multitab = bind_rows(tab))
+
+# This works:
+multisite_tables %>%
+  filter(form_in_extract %in% "patient") %>%
+  pull(tab) %>%
+  bind_rows(.)
