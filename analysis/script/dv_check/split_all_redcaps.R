@@ -3,11 +3,12 @@ library(purrr)
 library(here)
 purrr::walk(.x = fs::dir_ls(here("R")), .f = source)
 
+dd_path <- path('data', 'dv', 'aligned_dd', 'dd_nested.rds')
 
 cur_stub <- here('data-raw', 'bpc', 'step1-curated', 'NSCLC2')
 
 # manual entry on these...
-cur_dat_org <- tribble(
+cur_dat_mani <- tribble(
   ~phase,
   ~site,
   ~path,
@@ -33,16 +34,14 @@ cur_dat_org <- tribble(
   path(cur_stub, 'VICC', 'VICC_GENIEBPCNSCLCPhase2_20240824_reviewed.csv')
 )
 
+dd_nested <- readr::read_rds(dd_path)
 
-dat_dict <- readr::read_rds(
-  path(qc_config$storage_root, 'dict', 'aligned', 'dd.rds')
-)
+redcap_splitter(
+  filter(cur_dat_mani, site %in% "DFCI")$path,
+  filter(dd_nested, site %in% "DFCI")$aligned_dd[[1]]
+) %>%
+  lobstr::obj_size(.)
 
-dat_ex <- readr::read_csv(
-  dir_ls(path(qc_config$storage_root, 'data', 'l0_raw_redcap')),
-  # read everything as a character at this stage:
-  col_types = cols(.default = col_character())
-)
 
 nested_dd <- redcap_splitter(redcap_data = dat_ex, dict = dat_dict)
 

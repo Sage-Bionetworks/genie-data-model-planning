@@ -7,13 +7,14 @@ dat_dict <- readr::read_rds(
   path(qc_config$storage_root, 'dict', 'aligned', 'dd.rds')
 )
 
-dat_ex <- readr::read_csv(
-  dir_ls(path(qc_config$storage_root, 'data', 'l0_raw_redcap')),
-  # read everything as a character at this stage:
-  col_types = cols(.default = col_character())
+nested_dd <- redcap_splitter(
+  redcap_data_path = dir_ls(path(
+    qc_config$storage_root,
+    'data',
+    'l0_raw_redcap'
+  )),
+  dict = dat_dict
 )
-
-nested_dd <- redcap_splitter(redcap_data = dat_ex, dict = dat_dict)
 
 out_dir_l1 <- path(qc_config$storage_root, 'data', 'l1_split')
 fs::dir_create(out_dir_l1)
