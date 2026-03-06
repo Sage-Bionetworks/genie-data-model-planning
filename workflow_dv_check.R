@@ -12,6 +12,8 @@ script_runner <- function(
   invisible(name)
 }
 
+script_runner('align_dd_dv_check.R')
+
 # Step 1: create derived variable datasets:
 
 dir_nsclc_3.1 <- here(
