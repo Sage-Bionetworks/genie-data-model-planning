@@ -5,65 +5,33 @@ purrr::walk(.x = fs::dir_ls(here("R")), .f = source)
 
 dd_path <- path('data', 'dv', 'aligned_dd', 'dd_nested.rds')
 
-cur_stub <- here('data-raw', 'bpc', 'step1-curated', 'NSCLC2')
-
-# manual entry on these...
-cur_dat_mani <- tribble(
-  ~phase,
-  ~site,
-  ~path,
-
-  2,
-  'DFCI',
-  path(cur_stub, 'DFCI', '2024-01-30 NSCLC Phase 2 New Submission.csv'),
-
-  2,
-  'MSK',
-  path(cur_stub, 'MSK', 'BPC_MSK_NSCLCPh2_Full Cohort_09-May-2025.csv'),
-
-  2,
-  'UHN',
-  path(
-    cur_stub,
-    'UHN',
-    'UHN NSCLC Phase 2 Cohort Production Post Comples Queries Round 1.csv'
-  ),
-
-  2,
-  'VICC',
-  path(cur_stub, 'VICC', 'VICC_GENIEBPCNSCLCPhase2_20240824_reviewed.csv')
-)
-
 dd_nested <- readr::read_rds(dd_path)
 
+# Example of doing one at at time:
 redcap_splitter(
-  filter(cur_dat_mani, site %in% "DFCI")$path,
+  filter(dd_nested, site %in% "DFCI")$cur_path,
   filter(dd_nested, site %in% "DFCI")$aligned_dd[[1]]
 )
 
-cur_dat_mani <- full_join(
-  cur_dat_mani,
-  dd_nested,
-  by = 'site',
-  relationship = 'one-to-one'
-)
-
-cur_dat_mani <- cur_dat_mani %>%
+# We'll do them all:
+cur_dat_mani <- dd_nested %>%
   mutate(
-    nested_split_data = purrr::map(
-      .x = path,
+    nested_split_data = purrr::map2(
+      .x = cur_path,
       .y = aligned_dd,
       .f = \(x, y) redcap_splitter(redcap_data_path = x, dict = y)
     )
   )
 
+out_dir <- here('data', 'dv', 'layer_1_split_tables')
 
-nested_dd <- redcap_splitter(redcap_data = dat_ex, dict = dat_dict)
+readr::write_rds(
+  here(out_dir, 'nested_splits.rds')
+)
 
 out_dir_l1 <- path(qc_config$storage_root, 'data', 'l1_split')
 fs::dir_create(out_dir_l1)
 
-# It's actually more convenient for me to save this as a list dataframe.
 readr::write_rds(
   x = nested_dd,
   file = path(out_dir_l1, 'nested_l1.rds')
