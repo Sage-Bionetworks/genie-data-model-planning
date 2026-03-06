@@ -26,6 +26,7 @@ cur_dat_mani <- dd_nested %>%
 out_dir <- here('data', 'dv', 'layer_1_split_tables')
 
 readr::write_rds(
+  cur_dat_mani,
   here(out_dir, 'nested_splits.rds')
 )
 
