@@ -39,8 +39,23 @@ dd_nested <- readr::read_rds(dd_path)
 redcap_splitter(
   filter(cur_dat_mani, site %in% "DFCI")$path,
   filter(dd_nested, site %in% "DFCI")$aligned_dd[[1]]
-) %>%
-  lobstr::obj_size(.)
+)
+
+cur_dat_mani <- full_join(
+  cur_dat_mani,
+  dd_nested,
+  by = 'site',
+  relationship = 'one-to-one'
+)
+
+cur_dat_mani <- cur_dat_mani %>%
+  mutate(
+    nested_split_data = purrr::map(
+      .x = path,
+      .y = aligned_dd,
+      .f = \(x, y) redcap_splitter(redcap_data_path = x, dict = y)
+    )
+  )
 
 
 nested_dd <- redcap_splitter(redcap_data = dat_ex, dict = dat_dict)
