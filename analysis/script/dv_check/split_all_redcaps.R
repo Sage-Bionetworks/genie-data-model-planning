@@ -41,4 +41,7 @@ multisite_tables <- multisite_tables %>%
   group_by(form_in_extract) %>%
   summarize(multitab = list(bind_rows(tab)))
 
-multisite_tables
+readr::write_rds(
+  multisite_tables,
+  here(out_dir, 'multisite_tables.rds')
+)
