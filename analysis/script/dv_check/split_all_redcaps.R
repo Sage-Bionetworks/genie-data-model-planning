@@ -36,15 +36,9 @@ multisite_tables <- cur_dat_mani %>%
   unnest(nested_split_data) %>%
   select(site, form_in_extract, tab)
 
-cli_abort('error still below')
-
 # This fails:
-multisite_tables %>%
+multisite_tables <- multisite_tables %>%
   group_by(form_in_extract) %>%
-  summarize(multitab = bind_rows(tab))
+  summarize(multitab = list(bind_rows(tab)))
 
-# This works:
-multisite_tables %>%
-  filter(form_in_extract %in% "patient") %>%
-  pull(tab) %>%
-  bind_rows(.)
+multisite_tables
