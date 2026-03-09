@@ -55,15 +55,13 @@ nested_splits <- nested_splits %>%
     )
   )
 
-
-fs::dir_create(
-readr::write_rds(
+readr::write_rds(nested_splits, path(out_dir_dv, 'nested_dv.rds'))
 
 multisite_tables <- nested_splits %>%
   # keeping site temporarily just to have unique rows.
-  select(site, nested_split_data) %>%
-  unnest(nested_split_data) %>%
-  select(site, form_in_extract, tab)
+  select(site, form_in_extract, dv_tab) %>%
+  group_by(form_in_extract) %>%
+  summarize(dv_tab = list(bind_rows(dv_tab)))
 
 # This fails:
 multisite_tables <- multisite_tables %>%
