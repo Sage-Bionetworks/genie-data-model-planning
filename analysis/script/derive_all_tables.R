@@ -5,6 +5,9 @@ library(fs)
 library(purrr)
 purrr::walk(.x = fs::dir_ls(fs::path("R")), .f = source)
 
+out_dir_dv <- path('data', 'dv', 'layer_2_derived_tables')
+fs::dir_create(out_dir_dv)
+
 nested_splits <- readr::read_rds(
   path('data', 'dv', 'layer_1_split_tables', 'nested_splits.rds')
 )
@@ -51,3 +54,23 @@ nested_splits <- nested_splits %>%
       .f = dv_code_dispatch
     )
   )
+
+
+fs::dir_create(
+readr::write_rds(
+
+multisite_tables <- nested_splits %>%
+  # keeping site temporarily just to have unique rows.
+  select(site, nested_split_data) %>%
+  unnest(nested_split_data) %>%
+  select(site, form_in_extract, tab)
+
+# This fails:
+multisite_tables <- multisite_tables %>%
+  group_by(form_in_extract) %>%
+  summarize(multitab = list(bind_rows(tab)))
+
+readr::write_rds(
+  multisite_tables,
+  here(out_dir, 'multisite_tables.rds')
+)
