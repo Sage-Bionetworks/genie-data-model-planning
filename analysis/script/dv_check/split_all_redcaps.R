@@ -8,10 +8,10 @@ dd_path <- path('data', 'dv', 'aligned_dd', 'dd_nested.rds')
 dd_nested <- readr::read_rds(dd_path)
 
 # Example of doing one at at time:
-redcap_splitter(
-  filter(dd_nested, site %in% "DFCI")$cur_path,
-  filter(dd_nested, site %in% "DFCI")$aligned_dd[[1]]
-)
+# redcap_splitter(
+#   filter(dd_nested, site %in% "DFCI")$cur_path,
+#   filter(dd_nested, site %in% "DFCI")$aligned_dd[[1]]
+# )
 
 # We'll do them all:
 cur_dat_mani <- dd_nested %>%
@@ -30,18 +30,20 @@ readr::write_rds(
   here(out_dir, 'nested_splits.rds')
 )
 
-multisite_tables <- cur_dat_mani %>%
-  # keeping site temporarily just to have unique rows.
-  select(site, nested_split_data) %>%
-  unnest(nested_split_data) %>%
-  select(site, form_in_extract, tab)
+# This actually probably isn't useful yet because the aligned data dictionaries are site specific. We can bring this code back next step.
 
-# This fails:
-multisite_tables <- multisite_tables %>%
-  group_by(form_in_extract) %>%
-  summarize(multitab = list(bind_rows(tab)))
-
-readr::write_rds(
-  multisite_tables,
-  here(out_dir, 'multisite_tables.rds')
-)
+# multisite_tables <- cur_dat_mani %>%
+#   # keeping site temporarily just to have unique rows.
+#   select(site, nested_split_data) %>%
+#   unnest(nested_split_data) %>%
+#   select(site, form_in_extract, tab)
+#
+# # This fails:
+# multisite_tables <- multisite_tables %>%
+#   group_by(form_in_extract) %>%
+#   summarize(multitab = list(bind_rows(tab)))
+#
+# readr::write_rds(
+#   multisite_tables,
+#   here(out_dir, 'multisite_tables.rds')
+# )
