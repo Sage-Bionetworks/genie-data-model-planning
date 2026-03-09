@@ -14,7 +14,7 @@ script_runner <- function(
 
 script_runner('align_dd_dv_check.R')
 script_runner('split_all_redcaps.R')
-
+script_runner('derive_all_tables.R')
 
 # Step 1: create derived variable datasets:
 
