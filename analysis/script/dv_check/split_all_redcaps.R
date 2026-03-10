@@ -29,21 +29,3 @@ readr::write_rds(
   cur_dat_mani,
   here(out_dir, 'nested_splits.rds')
 )
-
-# This actually probably isn't useful yet because the aligned data dictionaries are site specific. We can bring this code back next step.
-
-# multisite_tables <- cur_dat_mani %>%
-#   # keeping site temporarily just to have unique rows.
-#   select(site, nested_split_data) %>%
-#   unnest(nested_split_data) %>%
-#   select(site, form_in_extract, tab)
-#
-# # This fails:
-# multisite_tables <- multisite_tables %>%
-#   group_by(form_in_extract) %>%
-#   summarize(multitab = list(bind_rows(tab)))
-#
-# readr::write_rds(
-#   multisite_tables,
-#   here(out_dir, 'multisite_tables.rds')
-# )
