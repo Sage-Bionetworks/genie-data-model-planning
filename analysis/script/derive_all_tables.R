@@ -63,12 +63,10 @@ multisite_tables <- nested_splits %>%
   group_by(form_in_extract) %>%
   summarize(dv_tab = list(bind_rows(dv_tab)))
 
-# This fails:
-multisite_tables <- multisite_tables %>%
-  group_by(form_in_extract) %>%
-  summarize(multitab = list(bind_rows(tab)))
-
 readr::write_rds(
   multisite_tables,
   here(out_dir, 'multisite_tables.rds')
 )
+
+
+cli_abort("Probably easier to make a named list for these")
