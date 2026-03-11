@@ -74,18 +74,14 @@ multisite_tables %<>%
   add_row(form_in_extract = 'ca_ind', dv_tab = list(ca_split$ca_ind)) %>%
   add_row(form_in_extract = 'ca_non_ind', dv_tab = list(ca_split$ca_non_ind))
 
-readr::write_rds(
-  multisite_tables,
-  here(out_dir_dv, 'multisite_tables.rds')
-)
-
-
-ca_ind <- ca_all %>%
-  filter(redcap_ca_index %in% "Yes")
-ca_non_ind <- ca_all %>%
-  filter(redcap_ca_index %in% "No")
-
 multisite_tables %<>%
   filter(purrr::map_dbl(dv_tab, nrow) > 0) %>%
   mutate(name = dat_name_to_short(form_in_extract)) %>%
   arrange(name)
+
+multisite_tables %>% select(name, dv_tab)
+
+readr::write_rds(
+  multisite_tables,
+  here(out_dir_dv, 'multisite_tables.rds')
+)
