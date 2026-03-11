@@ -8,10 +8,8 @@ purrr::walk(.x = fs::dir_ls(here("R")), .f = source)
 script_runner <- function(
   name
 ) {
-  source(here('analysis', 'script', 'dv_check', name))
+  source(here('analysis', 'script', name))
   invisible(name)
 }
 
-script_runner('align_dd_dv_check.R')
-script_runner('split_all_redcaps.R')
-script_runner('derive_all_tables.R')
+script_runner('get_raw_data_newdata.R')

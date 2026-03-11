@@ -5,21 +5,9 @@ purrr::walk(.x = fs::dir_ls(here("R")), .f = source)
 
 synLogin()
 
-data_file_synid <-
-  if (!is.null(qc_config$syn_data$syn_id_inst_file)) {
-    qc_config$syn_data$syn_id_inst_file
-  } else {
-    syn_proj_files <- get_syn_children_df(qc_config$syn_id_inst_folder)
-    if (nrow(syn_proj_files) > 1) {
-      cli_alert_danger("More than one file in the folder - check this.")
-    }
-    syn_proj_files$id
-  }
-
 cli::cli_alert_info(
   "File for {qc_config$inst} last modified on {synGet(data_file_synid)$properties$modifiedOn}"
 )
-
 
 cur_saver_newdata <- function(
   synid,
@@ -75,6 +63,17 @@ for (this_yam in config_list) {
     'qc_config_files',
     this_yam
   ))
+
+  data_file_synid <-
+    if (!is.null(qc_config$syn_data$syn_id_inst_file)) {
+      qc_config$syn_data$syn_id_inst_file
+    } else {
+      syn_proj_files <- get_syn_children_df(qc_config$syn_id_inst_folder)
+      if (nrow(syn_proj_files) > 1) {
+        cli_alert_danger("More than one file in the folder - check this.")
+      }
+      syn_proj_files$id
+    }
 
   dd_saver_newdata(
     synid = qc_config$syn_id_data_dict,
