@@ -86,13 +86,13 @@ dat_name_to_short <- function(dat_name_long, factorize = T) {
   rtn <- case_when(
     dat_name_long %in% c('ca_all', 'cancer_diagnosis') ~ 'ca_all',
     dat_name_long %in% c('reg', 'ca_directed_drugs') ~ 'reg',
-    dat_name_long %in% 'ca_directed_radtx' ~ 'rad',
-    dat_name_long %in% 'cancer_panel_test' ~ 'cpt',
-    dat_name_long %in% 'patient' ~ 'pt',
-    dat_name_long %in% 'prissmm_imaging' ~ 'img',
-    dat_name_long %in% 'prissmm_med_onc_assessment' ~ 'med_onc',
-    dat_name_long %in% 'prissmm_pathology' ~ 'path',
-    dat_name_long %in% 'prissmm_tumor_marker' ~ 'mark'
+    dat_name_long %in% c('rad', 'ca_directed_radtx') ~ 'rad',
+    dat_name_long %in% c('cpt', 'cancer_panel_test') ~ 'cpt',
+    dat_name_long %in% c('pt', 'patient') ~ 'pt',
+    dat_name_long %in% c('img', 'prissmm_imaging') ~ 'img',
+    dat_name_long %in% c('med_onc', 'prissmm_med_onc_assessment') ~ 'med_onc',
+    dat_name_long %in% c('path', 'prissmm_pathology') ~ 'path',
+    dat_name_long %in% c('mark', 'prissmm_tumor_marker') ~ 'mark'
   )
 
   if (factorize) {
@@ -107,7 +107,10 @@ ca_all <- multisite_tables %>%
   pull(dv_tab) %>%
   .[[1]]
 
-ca_ind <- pull
+ca_ind <- ca_all %>%
+  filter(redcap_ca_index %in% "Yes")
+ca_non_ind <- ca_all %>%
+  filter(redcap_ca_index %in% "No")
 
 multisite_tables %<>%
   filter(purrr::map_dbl(dv_tab, nrow) > 0) %>%
