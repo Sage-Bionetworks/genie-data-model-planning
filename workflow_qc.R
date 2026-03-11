@@ -19,14 +19,7 @@ script_runner <- function(
 # qc_conf_file <- 'her2_ucsf_config.yml'
 qc_conf_file <- 'her2_prov_config.yml'
 
-qc_config <- read_yaml(here(
-  'data-raw',
-  'qc_config_files',
-  qc_conf_file
-))
-
-# Adds a date to the folder name if the config says to.
-qc_config <- folder_date_update(qc_config)
+qc_config <- read_config_file(here('data-raw', 'qc_config_files', qc_conf_file))
 storage_setup(store_dir = qc_config$storage_root)
 
 
