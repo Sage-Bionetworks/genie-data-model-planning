@@ -63,12 +63,6 @@ multisite_tables <- nested_splits %>%
   group_by(form_in_extract) %>%
   summarize(dv_tab = list(bind_rows(dv_tab)))
 
-readr::write_rds(
-  multisite_tables,
-  here(out_dir_dv, 'multisite_tables.rds')
-)
-
-
 ca_split <- multisite_tables %>%
   filter(form_in_extract %in% 'cancer_diagnosis') %>%
   pull(dv_tab) %>%
@@ -79,6 +73,12 @@ multisite_tables %<>%
   filter(!(form_in_extract %in% 'cancer_diagnosis')) %>%
   add_row(form_in_extract = 'ca_ind', dv_tab = list(ca_split$ca_ind)) %>%
   add_row(form_in_extract = 'ca_non_ind', dv_tab = list(ca_split$ca_non_ind))
+
+readr::write_rds(
+  multisite_tables,
+  here(out_dir_dv, 'multisite_tables.rds')
+)
+
 
 ca_ind <- ca_all %>%
   filter(redcap_ca_index %in% "Yes")
