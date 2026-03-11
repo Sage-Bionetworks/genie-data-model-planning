@@ -32,15 +32,17 @@ cur_saver_newdata <- function(
   )
 
   fs::dir_create(cur_dir)
-  synGet(
+  ent <- synGet(
     entity = synid,
     downloadLocation = cur_dir,
     ifcollision = "overwrite.local"
   )
+  fs::file_move(path = ent$path, new_path = path(cur_dir, 'redcap_data.csv'))
 }
 
-dd_saver <- function(
-  synid
+dd_saver_newdata <- function(
+  synid,
+  qc_configuration
 ) {
   cur_dir <- fs::path(
     'data-raw',
@@ -48,20 +50,39 @@ dd_saver <- function(
     qc_configuration$inst
   )
 
+  print(cur_dir)
+
   fs::dir_create(cur_dir)
-  synGet(
+  ent <- synGet(
     entity = synid,
     downloadLocation = cur_dir,
     ifcollision = "overwrite.local"
   )
+  fs::file_move(path = ent$path, new_path = path(cur_dir, 'data_dict.csv'))
 }
 
-config_list <-
-  qc_config <-
-    dd_saver(
-      synid = qc_config$syn_id_data_dict
-    )
-
-cur_saver(
-  synid = data_file_synid
+config_list <- c(
+  'her2_dfci_config.yml',
+  'her2_msk_config.yml',
+  'her2_colu_config.yml',
+  'her2_ucsf_config.yml',
+  'her2_prov_config.yml'
 )
+
+for (this_yam in config_list) {
+  qc_config <- read_config_file(here(
+    'data-raw',
+    'qc_config_files',
+    this_yam
+  ))
+
+  dd_saver_newdata(
+    synid = qc_config$syn_id_data_dict,
+    qc_configuration = qc_config
+  )
+
+  cur_saver_newdata(
+    synid = data_file_synid,
+    qc_configuration = qc_config
+  )
+}
