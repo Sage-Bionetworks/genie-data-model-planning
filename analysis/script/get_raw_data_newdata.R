@@ -64,6 +64,8 @@ for (this_yam in config_list) {
     this_yam
   ))
 
+  print(qc_config)
+
   data_file_synid <-
     if (!is.null(qc_config$syn_data$syn_id_inst_file)) {
       qc_config$syn_data$syn_id_inst_file
@@ -74,6 +76,10 @@ for (this_yam in config_list) {
       }
       syn_proj_files$id
     }
+
+  cli::cli_alert_info(
+    "File for {qc_config$inst} last modified on {synGet(data_file_synid)$properties$modifiedOn}"
+  )
 
   dd_saver_newdata(
     synid = qc_config$syn_id_data_dict,
