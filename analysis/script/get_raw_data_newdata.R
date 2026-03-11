@@ -5,10 +5,6 @@ purrr::walk(.x = fs::dir_ls(here("R")), .f = source)
 
 synLogin()
 
-cli::cli_alert_info(
-  "File for {qc_config$inst} last modified on {synGet(data_file_synid)$properties$modifiedOn}"
-)
-
 cur_saver_newdata <- function(
   synid,
   qc_configuration
