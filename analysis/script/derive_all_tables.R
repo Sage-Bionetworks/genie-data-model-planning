@@ -65,8 +65,7 @@ multisite_tables <- nested_splits %>%
 
 readr::write_rds(
   multisite_tables,
-  here(out_dir, 'multisite_tables.rds')
+  here(out_dir_dv, 'multisite_tables.rds')
 )
 
-
-cli_abort("Probably easier to make a named list for these")
+multisite_tables %>% glimpse
