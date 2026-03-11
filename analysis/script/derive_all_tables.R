@@ -68,4 +68,48 @@ readr::write_rds(
   here(out_dir_dv, 'multisite_tables.rds')
 )
 
-multisite_tables %>% glimpse
+# Can easily add stuff to this as needed later on.
+dat_name_to_short <- function(dat_name_long, factorize = T) {
+  # go by the data guide order for my sanity:
+  fact_order <- c(
+    'pt',
+    'ca_all',
+    'reg',
+    'rad',
+    'path',
+    'img',
+    'med_onc',
+    'cpt',
+    'mark'
+  )
+
+  rtn <- case_when(
+    dat_name_long %in% c('ca_all', 'cancer_diagnosis') ~ 'ca_all',
+    dat_name_long %in% c('reg', 'ca_directed_drugs') ~ 'reg',
+    dat_name_long %in% 'ca_directed_radtx' ~ 'rad',
+    dat_name_long %in% 'cancer_panel_test' ~ 'cpt',
+    dat_name_long %in% 'patient' ~ 'pt',
+    dat_name_long %in% 'prissmm_imaging' ~ 'img',
+    dat_name_long %in% 'prissmm_med_onc_assessment' ~ 'med_onc',
+    dat_name_long %in% 'prissmm_pathology' ~ 'path',
+    dat_name_long %in% 'prissmm_tumor_marker' ~ 'mark'
+  )
+
+  if (factorize) {
+    factor(rtn, levels = fact_order)
+  } else {
+    rtn
+  }
+}
+
+ca_all <- multisite_tables %>%
+  filter(form_in_extract %in% 'cancer_diagnosis') %>%
+  pull(dv_tab) %>%
+  .[[1]]
+
+ca_ind <- pull
+
+multisite_tables %<>%
+  filter(purrr::map_dbl(dv_tab, nrow) > 0) %>%
+  mutate(name = dat_name_to_short(form_in_extract)) %>%
+  arrange(name)
