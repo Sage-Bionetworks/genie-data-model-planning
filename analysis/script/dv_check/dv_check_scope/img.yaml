@@ -1,0 +1,41 @@
+table: img
+sort_by:
+- record_id
+- ca_seq
+columns:
+  record_id: no
+  redcap_repeat_instrument: no
+  redcap_repeat_instance: no
+  image_prissmm_yn: no
+  image_inst_perf: no
+  image_inst_inter: no
+  image_scan_int: no
+  image_report_int: no
+  image_scan_type: no
+  oth_scan: no
+  image_ca: no
+  image_overall: no
+  image_casite1: no
+  image_casite2: no
+  image_casite3: no
+  image_casite4: no
+  image_casite5: no
+  image_casite6: no
+  image_casite7: no
+  image_casite8: no
+  image_casite9: no
+  image_casite10: no
+  image_casite11: no
+  image_casite12: no
+  image_casite13: no
+  image_casite14: no
+  image_casite15: no
+  image_ref_scan_int: no
+  image_scansite___1: no
+  image_scansite___2: no
+  image_scansite___3: no
+  image_scansite___4: no
+  image_scansite___5: no
+  image_scansite___6: no
+  image_scansite___7: no
+  image_scansite___8: no

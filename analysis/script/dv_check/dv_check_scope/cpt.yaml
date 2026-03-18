@@ -1,0 +1,38 @@
+table: cpt
+sort_by:
+- record_id
+- ca_seq
+columns:
+  record_id: no
+  redcap_repeat_instrument: no
+  redcap_repeat_instance: no
+  redcap_ca_seq: no
+  cpt_test_type: no
+  cpt_atm: no
+  cpt_brca1: no
+  cpt_brca2: no
+  cpt_brip1: no
+  cpt_chek2: no
+  cpt_fanca: no
+  cpt_hoxb13: no
+  cpt_mlh1: no
+  cpt_msh2: no
+  cpt_msh6: no
+  cpt_nbn: no
+  cpt_palb2: no
+  cpt_pms2: no
+  cpt_path_report_instance: no
+  cpt_genie_sample_id: no
+  cpt_oncotree_code: no
+  cpt_sample_type: no
+  cpt_seq_assay_id: no
+  cpt_germline_org: no
+  cpt_germline_org_oth: no
+  cpt_order_int: no
+  cpt_report_int: no
+  age_at_seq_report: no
+  cpt_major___1: no
+  cpt_major___2: no
+  cpt_qaresolve___1: no
+  cpt_qaresolve___2: no
+  cpt_qaresolve___3: no

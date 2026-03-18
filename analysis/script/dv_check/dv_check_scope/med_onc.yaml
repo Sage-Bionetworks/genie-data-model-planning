@@ -1,0 +1,18 @@
+table: med_onc
+sort_by:
+- record_id
+- ca_seq
+columns:
+  record_id: no
+  redcap_repeat_instrument: no
+  redcap_repeat_instance: no
+  md_onc_visit_int: no
+  md_prissmm_yn: no
+  md_inst: no
+  md_type_ca_cur: no
+  md_ecog: no
+  md_karnof: no
+  md_pca_status: no
+  md_psa_status: no
+  md_ca: no
+  md_ca_status: no

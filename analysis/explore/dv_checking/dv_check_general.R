@@ -4,6 +4,8 @@ library(fs)
 library(purrr)
 purrr::walk(.x = fs::dir_ls(fs::path("R")), .f = source)
 
+library(testthat)
+
 restricted_tab_dir <- here('data', 'dv', 'layer_2_derived_tables')
 tables_leg <- readr::read_rds(here(
   restricted_tab_dir,
@@ -44,6 +46,10 @@ apply_column_scope <- function(tbl_list, scope_dir) {
 scope_dir <- here(restricted_tab_dir, 'dv_check_scope')
 tables_leg <- apply_column_scope(tables_leg, scope_dir)
 tables_new <- apply_column_scope(tables_new, scope_dir)
+
+test_that(
+  expect_equal(tables_leg$pt$record_id, tables_new$pt$record_id)
+)
 
 waldo::compare(
   arrange(tables_leg$pt, record_id),

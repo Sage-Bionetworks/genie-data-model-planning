@@ -1,0 +1,45 @@
+table: reg
+sort_by:
+- record_id
+- ca_seq
+columns:
+  record_id: no
+  redcap_repeat_instrument: no
+  redcap_repeat_instance: no
+  redcap_ca_seq: no
+  drugs_inst: no
+  drugs_firstinst: no
+  drugs_ct_yn: no
+  drugs_num: no
+  drugs_admin: no
+  drugs_dc_ynu: no
+  drugs_drug_1: no
+  drugs_drug_oth_1: no
+  drugs_drug_1_mask: no
+  drugs_startdt_int_1: no
+  drugs_enddt_int_1: no
+  drugs_lastdt_int_1: no
+  drugs_drug_2: no
+  drugs_drug_oth_2: no
+  drugs_drug_2_mask: no
+  drugs_startdt_int_2: no
+  drugs_enddt_int_2: no
+  drugs_lastdt_int_2: no
+  drugs_drug_3: no
+  drugs_drug_oth_3: no
+  drugs_drug_3_mask: no
+  drugs_startdt_int_3: no
+  drugs_enddt_int_3: no
+  drugs_lastdt_int_3: no
+  drugs_drug_4: no
+  drugs_drug_oth_4: no
+  drugs_drug_4_mask: no
+  drugs_startdt_int_4: no
+  drugs_enddt_int_4: no
+  drugs_lastdt_int_4: no
+  drugs_drug_5: no
+  drugs_drug_oth_5: no
+  drugs_drug_5_mask: no
+  drugs_startdt_int_5: no
+  drugs_enddt_int_5: no
+  drugs_lastdt_int_5: no
