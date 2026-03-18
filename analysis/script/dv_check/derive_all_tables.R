@@ -79,9 +79,16 @@ multisite_tables %<>%
   mutate(name = dat_name_to_short(form_in_extract)) %>%
   arrange(name)
 
-multisite_tables %>% select(name, dv_tab)
+multisite_tables %<>% select(name, dv_tab)
 
 readr::write_rds(
   multisite_tables,
   here(out_dir_dv, 'multisite_tables.rds')
+)
+
+multisite_list <- pull(multisite_tables, dv_tab)
+names(multisite_list) <- pull(multisite_tables, name)
+readr::write_rds(
+  multisite_list,
+  here(out_dir_dv, 'table_list.rds')
 )
