@@ -37,11 +37,36 @@ tables_legacy <- list(
   cpt = legacy_reader('cancer_panel_test_level_dataset.csv')
 )
 
+# Yes, AI.
+restrict_to_shared_patients <- function(tables_legacy, tables_new) {
+  ids_legacy <- purrr::map(tables_legacy, \(tbl) tbl$record_id) |>
+    purrr::reduce(union)
+  ids_new <- purrr::map(tables_new, \(tbl) tbl$record_id) |>
+    purrr::reduce(union)
 
-ca_ind <- legacy_reader('patient_level_dataset.csv')
+  shared_ids <- intersect(ids_legacy, ids_new)
 
+  cli::cli_inform(c(
+    "Restricting to patients present in both legacy and new tables:",
+    "i" = "{length(setdiff(ids_legacy, shared_ids))} patient(s) removed from legacy tables.",
+    "i" = "{length(setdiff(ids_new, shared_ids))} patient(s) removed from new tables.",
+    "v" = "{length(shared_ids)} patient(s) retained."
+  ))
 
-tables_legacy <- readr::read_csv(
-  here(dir_nsclc_3.1, 'patient_level_dataset.csv')
-) %>%
-  filter(phase %in% "Phase II")
+  list(
+    tables_legacy = purrr::map(tables_legacy, \(tbl) {
+      dplyr::filter(tbl, record_id %in% shared_ids)
+    }),
+    tables_new = purrr::map(tables_new, \(tbl) {
+      dplyr::filter(tbl, record_id %in% shared_ids)
+    })
+  )
+}
+
+restricted <- restrict_to_shared_patients(tables_legacy, tables_new)
+tables_legacy <- restricted$tables_legacy
+tables_new <- restricted$tables_new
+
+dir_out <- here('data', 'dv', 'layer_2_derived_tables')
+readr::write_rds(tables_legacy, path(dir_out, 'restricted_tables_legacy.rds'))
+readr::write_rds(tables_new, path(dir_out, 'restricted_tables_new.rds'))
