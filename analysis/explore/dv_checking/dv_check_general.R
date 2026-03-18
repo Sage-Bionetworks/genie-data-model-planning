@@ -43,7 +43,7 @@ apply_column_scope <- function(tbl_list, scope_dir) {
   })
 }
 
-scope_dir <- here(restricted_tab_dir, 'dv_check_scope')
+scope_dir <- here('analysis', 'script', 'dv_check', 'dv_check_scope')
 tables_leg <- apply_column_scope(tables_leg, scope_dir)
 tables_new <- apply_column_scope(tables_new, scope_dir)
 
