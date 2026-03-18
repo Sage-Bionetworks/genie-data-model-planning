@@ -4,41 +4,47 @@ library(fs)
 library(purrr)
 purrr::walk(.x = fs::dir_ls(fs::path("R")), .f = source)
 
-multi_tab_new <- readr::read_rds(
-  here('data', 'dv', 'layer_2_derived_tables', 'multisite_tables.rds')
-)
+restricted_tab_dir <- here('data', 'dv', 'layer_2_derived_tables')
+tables_leg <- readr::read_rds(here(
+  restricted_tab_dir,
+  'restricted_tables_legacy.rds'
+))
+tables_new <- readr::read_rds(here(
+  restricted_tab_dir,
+  'restricted_tables_new.rds'
+))
 
-pt_new <- multi_tab_new %>%
-  filter(form_in_extract %in% 'patient') %>%
-  pull(dv_tab) %>%
-  .[[1]]
+apply_column_scope <- function(tables_leg, tables_new, scope_dir) {
+  yaml_files <- fs::dir_ls(scope_dir, glob = "*.yaml")
 
-dir_nsclc_3.1 <- here(
-  'data-raw',
-  'bpc',
-  'step4-release',
-  'NSCLC',
-  '3.1-consortium'
-)
+  scope <- purrr::map(yaml_files, \(f) {
+    cfg <- yaml::read_yaml(f)
+    names(purrr::keep(cfg$columns, isTRUE))
+  }) |>
+    purrr::set_names(tools::file_path_sans_ext(basename(yaml_files)))
 
-pt_legacy <- readr::read_csv(
-  here(dir_nsclc_3.1, 'patient_level_dataset.csv')
-) %>%
-  filter(phase %in% "Phase II")
+  select_cols <- function(tbl_list) {
+    purrr::imap(tbl_list, \(tbl, nm) {
+      keep_cols <- scope[[nm]]
+      if (is.null(keep_cols)) {
+        cli::cli_warn("No scope file found for table {.val {nm}} — keeping all columns.")
+        return(tbl)
+      }
+      missing_cols <- setdiff(keep_cols, names(tbl))
+      if (length(missing_cols) > 0) {
+        cli::cli_warn("Table {.val {nm}}: scoped columns not present and skipped: {.val {missing_cols}}")
+      }
+      dplyr::select(tbl, dplyr::any_of(keep_cols))
+    })
+  }
 
-setdiff(pt_legacy$record_id, pt_new$record_id)
+  list(
+    tables_leg = select_cols(tables_leg),
+    tables_new = select_cols(tables_new)
+  )
+}
 
-pt_in_new_not_legacy <- setdiff(pt_new$record_id, pt_legacy$record_id)
-
-pt_new %>%
-  filter(record_id %in% pt_in_new_not_legacy) %>%
-  ggplot(aes(x = birth_year)) +
-  geom_histogram(binwidth = 5, fill = "steelblue", color = "white") +
-  labs(
-    title = "Birth Year of Patients in pt_new but not in pt_legacy",
-    x = "Birth Year",
-    y = "Count"
-  ) +
-  theme_minimal()
-
-# hrmmm that's odd.
+scope_dir <- here(restricted_tab_dir, 'dv_check_scope')
+scoped <- apply_column_scope(tables_leg, tables_new, scope_dir)
+tables_leg <- scoped$tables_leg
+tables_new  <- scoped$tables_new
