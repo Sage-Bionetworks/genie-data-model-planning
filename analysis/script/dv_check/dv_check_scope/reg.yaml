@@ -1,7 +1,7 @@
 table: reg
 sort_by:
 - record_id
-- ca_seq
+- drugs_drug_1
 columns:
   record_id: no
   redcap_repeat_instrument: no

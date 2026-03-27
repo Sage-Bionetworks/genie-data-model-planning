@@ -1,7 +1,5 @@
 table: ca_non_ind
 sort_by:
-- record_id
-- ca_seq
 columns:
   record_id: no
   ca_seq: no

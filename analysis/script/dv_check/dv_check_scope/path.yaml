@@ -1,7 +1,6 @@
 table: path
 sort_by:
 - record_id
-- ca_seq
 columns:
   record_id: no
   redcap_repeat_instrument: no
