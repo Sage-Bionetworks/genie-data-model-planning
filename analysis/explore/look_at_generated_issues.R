@@ -11,4 +11,3 @@ issues <- readr::read_csv(
 # However, my labels aren't getting surfaced unfortunately.
 issues %>%
   View(.)
-
