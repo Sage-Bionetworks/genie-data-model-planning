@@ -45,3 +45,37 @@ tables_new <- restricted$tables_new
 dir_out <- here('data', 'dv', 'layer_2_derived_tables')
 readr::write_rds(tables_legacy, path(dir_out, 'restricted_tables_legacy.rds'))
 readr::write_rds(tables_new, path(dir_out, 'restricted_tables_new.rds'))
+
+# Not sure if I'll do this as a new script or keep it here...
+# but the next task is remapping cancer sequence in our cohort to match the legacy ones.  To do this I need a separate unique identifier variable combo for cancer sequence.
+
+leg_all_cancers <- bind_rows(
+  tables_legacy$ca_ind,
+  tables_legacy$ca_non_ind
+)
+
+leg_all_cancers %>%
+  count(
+    record_id,
+    dob_ca_dx_days,
+    naaccr_laterality_cd,
+    naaccr_clin_stage_cd,
+    sort = T
+  ) %>%
+  filter(n >= 2)
+
+tables_new$ca_ind$naaccr_laterality_cd
+tables_legacy$ca_ind$naaccr_laterality_cd
+
+add_cancer_id <- function(dat) {
+  dat %>%
+    mutate(
+      cancer_id = rlang::hash(paste(
+        record_id,
+        dob_ca_dx_days,
+        naaccr_laterality_cd,
+        naaccr_clin_stage_cd,
+        sep = "|"
+      ))
+    )
+}
