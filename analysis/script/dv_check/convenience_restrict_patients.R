@@ -79,3 +79,5 @@ add_cancer_id <- function(dat) {
       ))
     )
 }
+
+# Next steps - get the column types to be similar, then make sure we have a good match between datasets.  Eliminate the people duplicates.  Remap cancer sequence.  Probably easier to just CREATE a cancer sequence first in the new ones (just use the old code and feed it to claude)
