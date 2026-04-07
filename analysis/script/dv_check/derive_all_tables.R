@@ -84,26 +84,6 @@ multisite_tables %<>% select(name, dv_tab)
 multisite_list <- pull(multisite_tables, dv_tab)
 names(multisite_list) <- pull(multisite_tables, name)
 
-propagate_ca_seq <- function(lst) {
-  ca_seq_lookup <- bind_rows(
-    lst[["ca_ind"]],
-    lst[["ca_non_ind"]]
-  ) |>
-    select(record_id, redcap_ca_seq, ca_seq)
-
-  ca_tables <- c("ca_ind", "ca_non_ind")
-  purrr::imap(lst, \(tab, nm) {
-    if (nm %in% ca_tables) {
-      return(tab)
-    }
-    if (!("redcap_ca_seq" %in% names(tab))) {
-      return(tab)
-    }
-    tab |>
-      dplyr::left_join(ca_seq_lookup, by = c("record_id", "redcap_ca_seq"))
-  })
-}
-
 multisite_list <- propagate_ca_seq(multisite_list)
 
 readr::write_rds(
