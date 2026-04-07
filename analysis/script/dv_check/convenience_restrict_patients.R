@@ -67,22 +67,39 @@ leg_all_cancers %>%
 tables_new$ca_ind$naaccr_laterality_cd
 tables_legacy$ca_ind$naaccr_laterality_cd
 
-add_cancer_hash <- function(dat) {
-  dat %>%
-    mutate(
-      cancer_id = rlang::hash(paste(
-        record_id,
-        dob_ca_dx_days,
-        naaccr_laterality_cd,
-        naaccr_clin_stage_cd,
-        sep = "|"
-      ))
-    )
-}
 
 new_all_cancers <- bind_rows(
   tables_new$ca_ind,
   tables_new$ca_non_ind
+)
+
+
+tables_new$ca_ind %<>% add_cancer_hash()
+tables_new$ca_non_ind %<>% add_cancer_hash()
+tables_legacy$ca_ind %<>% add_cancer_hash()
+tables_legacy$ca_non_ind %<>% add_cancer_hash()
+
+
+cancer_hashes_new <- c(
+  tables_new$ca_ind$cancer_hash,
+  tables_new$ca_non_ind$cancer_hash
+)
+
+cancer_hashes_legacy <- c(
+  tables_legacy$ca_ind$cancer_hash,
+  tables_legacy$ca_non_ind$cancer_hash
+)
+
+vec_unique_only <- function(x) {
+  x[!duplicated(x) & !duplicated(x, fromLast = TRUE)]
+}
+convenient_hashes <- intersect(
+  vec_unique_only(cancer_hashes_new),
+  vec_unique_only(cancer_hashes_legacy)
+)
+
+cli_abort(
+  'One thing to check on may be the types of these columns, but it seems like we have a pretty reasonably sized set here'
 )
 
 # Next steps - get the column types to be similar, then make sure we have a good match between datasets.  Eliminate the people duplicates.  Remap cancer sequence.  Probably easier to just CREATE a cancer sequence first in the new ones (just use the old code and feed it to claude)
