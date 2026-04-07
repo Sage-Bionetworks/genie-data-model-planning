@@ -67,7 +67,7 @@ leg_all_cancers %>%
 tables_new$ca_ind$naaccr_laterality_cd
 tables_legacy$ca_ind$naaccr_laterality_cd
 
-add_cancer_id <- function(dat) {
+add_cancer_hash <- function(dat) {
   dat %>%
     mutate(
       cancer_id = rlang::hash(paste(
@@ -79,5 +79,10 @@ add_cancer_id <- function(dat) {
       ))
     )
 }
+
+new_all_cancers <- bind_rows(
+  tables_new$ca_ind,
+  tables_new$ca_non_ind
+)
 
 # Next steps - get the column types to be similar, then make sure we have a good match between datasets.  Eliminate the people duplicates.  Remap cancer sequence.  Probably easier to just CREATE a cancer sequence first in the new ones (just use the old code and feed it to claude)
