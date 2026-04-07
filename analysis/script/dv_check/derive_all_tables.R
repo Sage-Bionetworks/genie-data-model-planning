@@ -93,8 +93,12 @@ propagate_ca_seq <- function(lst) {
 
   ca_tables <- c("ca_ind", "ca_non_ind")
   purrr::imap(lst, \(tab, nm) {
-    if (nm %in% ca_tables) return(tab)
-    if (!("redcap_ca_seq" %in% names(tab))) return(tab)
+    if (nm %in% ca_tables) {
+      return(tab)
+    }
+    if (!("redcap_ca_seq" %in% names(tab))) {
+      return(tab)
+    }
     tab |>
       dplyr::left_join(ca_seq_lookup, by = c("record_id", "redcap_ca_seq"))
   })
