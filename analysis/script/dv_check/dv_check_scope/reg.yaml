@@ -3,43 +3,106 @@ sort_by:
 - record_id
 - drugs_drug_1
 columns:
+  cohort: no
+  phase: no
   record_id: yes
-  redcap_repeat_instrument: no
-  redcap_repeat_instance: no
-  redcap_ca_seq: no
+  institution: no
+  ca_seq: no
+  regimen_number: no
+  regimen_number_within_cancer: no
+  redcap_ca_index: no
+  drugs_num: no
   drugs_inst: no
   drugs_firstinst: no
   drugs_ct_yn: no
-  drugs_num: no
-  drugs_admin: no
   drugs_dc_ynu: no
-  drugs_drug_1: yes 
-  drugs_drug_oth_1: no
-  drugs_drug_1_mask: no
-  drugs_startdt_int_1: no
-  drugs_enddt_int_1: no
-  drugs_lastdt_int_1: no
+  regimen_drugs: no
+  drugs_drug_1: yes
   drugs_drug_2: no
-  drugs_drug_oth_2: no
-  drugs_drug_2_mask: no
-  drugs_startdt_int_2: no
-  drugs_enddt_int_2: no
-  drugs_lastdt_int_2: no
   drugs_drug_3: no
-  drugs_drug_oth_3: no
-  drugs_drug_3_mask: no
-  drugs_startdt_int_3: no
-  drugs_enddt_int_3: no
-  drugs_lastdt_int_3: no
   drugs_drug_4: no
-  drugs_drug_oth_4: no
-  drugs_drug_4_mask: no
-  drugs_startdt_int_4: no
-  drugs_enddt_int_4: no
-  drugs_lastdt_int_4: no
   drugs_drug_5: no
-  drugs_drug_oth_5: no
-  drugs_drug_5_mask: no
+  drugs_startdt_int_1: no
+  drugs_startdt_int_2: no
+  drugs_startdt_int_3: no
+  drugs_startdt_int_4: no
   drugs_startdt_int_5: no
-  drugs_enddt_int_5: no
-  drugs_lastdt_int_5: no
+  dx_drug_start_int_1: no
+  dx_drug_start_int_2: no
+  dx_drug_start_int_3: no
+  dx_drug_start_int_4: no
+  dx_drug_start_int_5: no
+  dx_drug_start_int_mos_1: no
+  dx_drug_start_int_mos_2: no
+  dx_drug_start_int_mos_3: no
+  dx_drug_start_int_mos_4: no
+  dx_drug_start_int_mos_5: no
+  dx_drug_end_int_1: no
+  dx_drug_end_int_2: no
+  dx_drug_end_int_3: no
+  dx_drug_end_int_4: no
+  dx_drug_end_int_5: no
+  dx_drug_end_int_mos_1: no
+  dx_drug_end_int_mos_2: no
+  dx_drug_end_int_mos_3: no
+  dx_drug_end_int_mos_4: no
+  dx_drug_end_int_mos_5: no
+  dx_drug_end_or_lastadm_int_1: no
+  dx_drug_end_or_lastadm_int_2: no
+  dx_drug_end_or_lastadm_int_3: no
+  dx_drug_end_or_lastadm_int_4: no
+  dx_drug_end_or_lastadm_int_5: no
+  dx_reg_start_int: no
+  dx_reg_start_int_mos: no
+  dx_reg_start_int_yrs: no
+  dx_reg_end_any_int: no
+  dx_reg_end_any_int_mos: no
+  dx_reg_end_any_int_yrs: no
+  dx_reg_end_all_int: no
+  dx_reg_end_all_int_mos: no
+  dx_reg_end_all_int_yrs: no
+  os_d_status: no
+  tt_os_d1_days: no
+  tt_os_d2_days: no
+  tt_os_d3_days: no
+  tt_os_d4_days: no
+  tt_os_d5_days: no
+  tt_os_d1_mos: no
+  tt_os_d2_mos: no
+  tt_os_d3_mos: no
+  tt_os_d4_mos: no
+  tt_os_d5_mos: no
+  tt_os_d1_yrs: no
+  tt_os_d2_yrs: no
+  tt_os_d3_yrs: no
+  tt_os_d4_yrs: no
+  tt_os_d5_yrs: no
+  os_g_status: no
+  tt_os_g_days: no
+  tt_os_g_mos: no
+  tt_os_g_yrs: no
+  pfs_i_g_status: no
+  tt_pfs_i_g_days: no
+  tt_pfs_i_g_mos: no
+  tt_pfs_i_g_yrs: no
+  pfs_m_g_status: no
+  tt_pfs_m_g_days: no
+  tt_pfs_m_g_mos: no
+  tt_pfs_m_g_yrs: no
+  pfs_i_or_m_g_status: no
+  tt_pfs_i_or_m_g_days: no
+  tt_pfs_i_or_m_g_mos: no
+  tt_pfs_i_or_m_g_yrs: no
+  pfs_i_and_m_g_status: no
+  tt_pfs_i_and_m_g_days: no
+  tt_pfs_i_and_m_g_mos: no
+  tt_pfs_i_and_m_g_yrs: no
+  ttnt_any_ca_status: no
+  ttnt_any_ca_days: no
+  ttnt_any_ca_mos: no
+  ttnt_any_ca_yrs: no
+  ttnt_ca_seq_status: no
+  ttnt_ca_seq_days: no
+  ttnt_ca_seq_mos: no
+  ttnt_ca_seq_yrs: no
+  release_version: no
