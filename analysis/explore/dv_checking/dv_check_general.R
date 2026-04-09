@@ -41,3 +41,12 @@ test_that(
     pull_composite_id(tables_new, "ca_ind", record_id, ca_seq)
   )
 )
+
+cli::cli_inform(
+  "Columns being checked in ca_ind: {.code tables_leg$ca_ind}: {.val {names(tables_leg$ca_ind)}}"
+)
+
+waldo::compare(
+  arrange(tables_leg$pt, record_id),
+  arrange(tables_new$pt, record_id)
+)
