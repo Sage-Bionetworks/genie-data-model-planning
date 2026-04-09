@@ -2,7 +2,7 @@ table: img
 sort_by:
 - record_id
 columns:
-  record_id: no
+  record_id: yes 
   redcap_repeat_instrument: no
   redcap_repeat_instance: no
   image_prissmm_yn: no

@@ -1,9 +1,8 @@
 table: med_onc
 sort_by:
 - record_id
-- ca_seq
 columns:
-  record_id: no
+  record_id: yes 
   redcap_repeat_instrument: no
   redcap_repeat_instance: no
   md_onc_visit_int: no

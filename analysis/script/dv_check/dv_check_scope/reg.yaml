@@ -3,7 +3,7 @@ sort_by:
 - record_id
 - drugs_drug_1
 columns:
-  record_id: no
+  record_id: yes
   redcap_repeat_instrument: no
   redcap_repeat_instance: no
   redcap_ca_seq: no
@@ -13,7 +13,7 @@ columns:
   drugs_num: no
   drugs_admin: no
   drugs_dc_ynu: no
-  drugs_drug_1: no
+  drugs_drug_1: yes 
   drugs_drug_oth_1: no
   drugs_drug_1_mask: no
   drugs_startdt_int_1: no

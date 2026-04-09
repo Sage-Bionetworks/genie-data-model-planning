@@ -17,4 +17,4 @@ script_runner('split_all_redcaps.R')
 script_runner('derive_all_tables.R')
 script_runner('convenience_restrict_patients.R')
 
-# from here I've been working on explore/dv_check_general.R for now.
+# from here I've been working on explore/dv_checking/dv_check_general.R for now.
