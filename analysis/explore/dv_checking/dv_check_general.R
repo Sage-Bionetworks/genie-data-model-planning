@@ -29,8 +29,15 @@ cli::cli_inform(
   "Columns being checked in pt: {.code tables_leg$pt}: {.val {names(tables_leg$pt)}}"
 )
 
-
 waldo::compare(
   arrange(tables_leg$pt, record_id),
   arrange(tables_new$pt, record_id)
+)
+
+test_that(
+  "Same set of record_id|ca_seq values in ca_ind table",
+  expect_setequal(
+    pull_composite_id(tables_leg, "ca_ind", record_id, ca_seq),
+    pull_composite_id(tables_new, "ca_ind", record_id, ca_seq)
+  )
 )
