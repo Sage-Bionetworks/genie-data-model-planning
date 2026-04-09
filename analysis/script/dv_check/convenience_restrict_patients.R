@@ -91,6 +91,9 @@ convenient_hashes <- intersect(
 tables_new <- restrict_by_ca_hash(tables_new, convenient_hashes)
 tables_legacy <- restrict_by_ca_hash(tables_legacy, convenient_hashes)
 
+tables_new <- remap_ca_seq(tables_new, ref_tables = tables_legacy)
+
+
 dir_out <- here('data', 'dv', 'layer_2_derived_tables')
 readr::write_rds(tables_legacy, path(dir_out, 'restricted_tables_legacy.rds'))
 readr::write_rds(tables_new, path(dir_out, 'restricted_tables_new.rds'))
