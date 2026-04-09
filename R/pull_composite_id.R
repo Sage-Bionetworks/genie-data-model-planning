@@ -1,6 +1,6 @@
 pull_composite_id <- function(tables, table_name, ...) {
   tables |>
     purrr::pluck(table_name) |>
-    dplyr::mutate(.id = paste(..., sep = "|")) |>
+    tidyr::unite(".id", ..., sep = "|", remove = FALSE) |>
     dplyr::pull(.id)
 }
