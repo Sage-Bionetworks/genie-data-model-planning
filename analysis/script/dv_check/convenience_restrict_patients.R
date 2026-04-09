@@ -42,13 +42,6 @@ restricted <- restrict_to_shared_patients(tables_legacy, tables_new)
 tables_legacy <- restricted$tables_legacy
 tables_new <- restricted$tables_new
 
-dir_out <- here('data', 'dv', 'layer_2_derived_tables')
-readr::write_rds(tables_legacy, path(dir_out, 'restricted_tables_legacy.rds'))
-readr::write_rds(tables_new, path(dir_out, 'restricted_tables_new.rds'))
-
-# Not sure if I'll do this as a new script or keep it here...
-# but the next task is remapping cancer sequence in our cohort to match the legacy ones.  To do this I need a separate unique identifier variable combo for cancer sequence.
-
 leg_all_cancers <- bind_rows(
   tables_legacy$ca_ind,
   tables_legacy$ca_non_ind
@@ -73,23 +66,6 @@ tables_new$ca_ind %<>%
 tables_new$ca_non_ind %<>%
   mutate(naaccr_laterality_cd = as.numeric(naaccr_laterality_cd))
 
-tables_new$ca_non_ind %>%
-  select(
-    record_id,
-    dob_ca_dx_days,
-    naaccr_laterality_cd,
-    naaccr_clin_stage_cd
-  ) %>%
-  glimpse
-
-tables_legacy$ca_non_ind %>%
-  select(
-    record_id,
-    dob_ca_dx_days,
-    naaccr_laterality_cd,
-    naaccr_clin_stage_cd
-  ) %>%
-  glimpse
 
 tables_new$ca_ind %<>% add_cancer_hash()
 tables_new$ca_non_ind %<>% add_cancer_hash()
@@ -112,4 +88,9 @@ convenient_hashes <- intersect(
   vec_unique_only(cancer_hashes_legacy)
 )
 
-# Next steps - get the column types to be similar, then make sure we have a good match between datasets.  Eliminate the people duplicates.  Remap cancer sequence.  Probably easier to just CREATE a cancer sequence first in the new ones (just use the old code and feed it to claude)
+tables_new <- restrict_by_ca_hash(tables_new, convenient_hashes)
+tables_legacy <- restrict_by_ca_hash(tables_legacy, convenient_hashes)
+
+dir_out <- here('data', 'dv', 'layer_2_derived_tables')
+readr::write_rds(tables_legacy, path(dir_out, 'restricted_tables_legacy.rds'))
+readr::write_rds(tables_new, path(dir_out, 'restricted_tables_new.rds'))
