@@ -21,12 +21,16 @@ tables_leg <- apply_column_scope(tables_leg, scope_dir)
 tables_new <- apply_column_scope(tables_new, scope_dir)
 
 test_that(
-  expect_equal(tables_leg$pt$record_id, tables_new$pt$record_id)
+  "Same set of record_id's in pt table",
+  expect_setequal(tables_leg$pt$record_id, tables_new$pt$record_id)
 )
+
+cli::cli_inform(
+  "Columns being checked in pt: {.code tables_leg$pt}: {.val {names(tables_leg$pt)}}"
+)
+
 
 waldo::compare(
   arrange(tables_leg$pt, record_id),
   arrange(tables_new$pt, record_id)
 )
-
-cli_abort("not sure what's going on here - need to look.")

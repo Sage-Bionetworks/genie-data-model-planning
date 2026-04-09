@@ -3,6 +3,7 @@ sort_by:
 - record_id
 columns:
   record_id: yes
+  institution: yes
   redcap_repeat_instrument: no
   redcap_repeat_instance: no
   cur_curator: no
@@ -13,26 +14,16 @@ columns:
   birth_year: yes
   naaccr_ethnicity_code: yes
   naaccr_race_code_primary: yes
-  naaccr_race_code_secondary: no
-  naaccr_race_code_tertiary: no
-  naaccr_sex_code: no
+  naaccr_race_code_secondary: yes
+  naaccr_race_code_tertiary: yes 
+  naaccr_sex_code: yes
   hybrid_death_ind: no
-  hybrid_death_int: no
-  hybrid_death_source: no
+  hybrid_death_int: yes 
+  hybrid_death_source: yes 
   ndi_flag: no
-  last_oncvisit_int: no
-  last_alive_int: no
-  last_anyvisit_int: no
-  enroll_hospice_int: no
+  last_oncvisit_int: yes
+  last_alive_int: yes 
+  last_anyvisit_int: yes 
+  enroll_hospice_int: yes
   redcap_data_access_group: no
-  drugs_dc_reason___1: no
-  drugs_dc_reason___10: no
-  drugs_dc_reason___11: no
-  drugs_dc_reason___2: no
-  drugs_dc_reason___3: no
-  drugs_dc_reason___4: no
-  drugs_dc_reason___5: no
-  drugs_dc_reason___6: no
-  drugs_dc_reason___7: no
-  drugs_dc_reason___8: no
-  drugs_dc_reason___9: no
+
