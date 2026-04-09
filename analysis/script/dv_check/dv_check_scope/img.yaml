@@ -2,16 +2,31 @@ table: img
 sort_by:
 - record_id
 columns:
-  record_id: yes 
-  redcap_repeat_instrument: no
-  redcap_repeat_instance: no
-  image_prissmm_yn: no
+  cohort: no
+  phase: no
+  record_id: yes
+  institution: no
+  scan_number: no
+  image_scan_int: no
+  dx_scan_days: no
+  dx_scan_mos: no
+  dx_scan_yrs: no
+  image_ref_scan_int: no
+  dx_ref_scan_days: no
+  dx_ref_scan_mos: no
+  dx_ref_scan_yrs: no
   image_inst_perf: no
   image_inst_inter: no
-  image_scan_int: no
-  image_report_int: no
   image_scan_type: no
-  oth_scan: no
+  image_scansite___1: no
+  image_scansite___2: no
+  image_scansite___3: no
+  image_scansite___4: no
+  image_scansite___5: no
+  image_scansite___6: no
+  image_scansite___7: no
+  image_scansite___8: no
+  scan_sites: no
   image_ca: no
   image_overall: no
   image_casite1: no
@@ -29,12 +44,4 @@ columns:
   image_casite13: no
   image_casite14: no
   image_casite15: no
-  image_ref_scan_int: no
-  image_scansite___1: no
-  image_scansite___2: no
-  image_scansite___3: no
-  image_scansite___4: no
-  image_scansite___5: no
-  image_scansite___6: no
-  image_scansite___7: no
-  image_scansite___8: no
+  release_version: no
