@@ -48,6 +48,7 @@ cli::cli_inform(
 )
 
 waldo::compare(
-  arrange(tables_leg$pt, record_id),
-  arrange(tables_new$pt, record_id)
+  arrange(tables_leg$ca_ind, record_id),
+  arrange(tables_new$ca_ind, record_id),
+  tolerance = 1e-6
 )

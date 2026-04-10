@@ -4,7 +4,6 @@ library(fs)
 library(purrr)
 library(here)
 purrr::walk(.x = fs::dir_ls(here("R")), .f = source)
-
 script_runner <- function(
   name
 ) {
