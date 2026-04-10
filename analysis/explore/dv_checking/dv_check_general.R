@@ -73,8 +73,8 @@ tables_leg$reg <- tables_leg$reg %>%
   dplyr::mutate(regimen_drugs = trim_drug_spaces(regimen_drugs))
 
 # Couple column type conversions so I can check easier:
-tables_leg$reg <- tables_leg$reg %>%
-  dplyr::mutate(across(dx_drug_end_or_lastadm_int_5, as.double))
+# tables_leg$reg <- tables_leg$reg %>%
+#   dplyr::mutate(across(dx_drug_end_or_lastadm_int_5, as.double))
 
 waldo::compare(
   arrange(tables_leg$reg, record_id, ca_seq, regimen_number),
