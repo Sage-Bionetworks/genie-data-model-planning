@@ -12,9 +12,9 @@ columns:
   regimen_number: yes
   regimen_number_within_cancer: no
   redcap_ca_index: no
-  drugs_num: no
-  drugs_inst: no
-  drugs_firstinst: no
+  drugs_num: yes
+  drugs_inst: yes
+  drugs_firstinst: yes
   drugs_ct_yn: yes
   drugs_dc_ynu: yes
   regimen_drugs: yes
