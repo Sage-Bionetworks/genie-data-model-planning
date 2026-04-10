@@ -31,7 +31,7 @@ columns:
   naaccr_laterality_cd: no
   ca_grade: no
   best_ajcc_stage_cd: no
-  stage_dx: no
+  stage_dx: yes
   stage_dx_iv: no 
   ca_tnm_edition_num: no
   naaccr_tnm_path_desc: no
@@ -65,17 +65,17 @@ columns:
   naaccr_seer_sum_stage: no
   ca_tx_pre_path_stage: no
   naaccr_tnm_edition_num: no
-  ca_dmets_yn: yes
-  ca_first_dmets1: yes 
-  ca_first_dmets2: yes
-  ca_first_dmets3: yes
-  ca_first_dmets4: yes
-  ca_first_dmets5: yes
-  ca_first_dmets6: yes
-  ca_first_dmets7: yes
-  ca_first_dmets8: yes
-  ca_first_dmets9: yes
-  ca_first_dmets10: yes
+  ca_dmets_yn: no
+  ca_first_dmets1: no 
+  ca_first_dmets2: no
+  ca_first_dmets3: no
+  ca_first_dmets4: no
+  ca_first_dmets5: no
+  ca_first_dmets6: no
+  ca_first_dmets7: no
+  ca_first_dmets8: no
+  ca_first_dmets9: no
+  ca_first_dmets10: no
   ca_cigarette: no
   ca_lung_sep_tumor: no
   ca_lung_pl_el_invasion: no
