@@ -39,20 +39,20 @@ columns:
   dx_drug_start_int_mos_4: no
   dx_drug_start_int_mos_5: no
   dx_drug_end_int_1: yes
-  dx_drug_end_int_2: yes
-  dx_drug_end_int_3: yes
-  dx_drug_end_int_4: yes
+  dx_drug_end_int_2: no
+  dx_drug_end_int_3: no
+  dx_drug_end_int_4: no
   dx_drug_end_int_5: no
   dx_drug_end_int_mos_1: no
   dx_drug_end_int_mos_2: no
   dx_drug_end_int_mos_3: no
   dx_drug_end_int_mos_4: no
   dx_drug_end_int_mos_5: no
-  dx_drug_end_or_lastadm_int_1: no
-  dx_drug_end_or_lastadm_int_2: no
-  dx_drug_end_or_lastadm_int_3: no
-  dx_drug_end_or_lastadm_int_4: no
-  dx_drug_end_or_lastadm_int_5: no
+  dx_drug_end_or_lastadm_int_1: yes
+  dx_drug_end_or_lastadm_int_2: yes
+  dx_drug_end_or_lastadm_int_3: yes
+  dx_drug_end_or_lastadm_int_4: yes
+  dx_drug_end_or_lastadm_int_5: no # same 3 cases have a problem, not surprising and not and issue.
   dx_reg_start_int: no
   dx_reg_start_int_mos: no
   dx_reg_start_int_yrs: no
