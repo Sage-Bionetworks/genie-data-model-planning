@@ -36,11 +36,11 @@ columns:
   ca_tnm_edition_num: no
   naaccr_tnm_path_desc: no
   naaccr_path_t_cd: yes
-  ca_path_t_stage: yes
-  ca_path_t1_det: yes
-  ca_path_t2_det: yes
-  ca_path_t3_det: yes
-  ca_path_t4_det: yes
+  ca_path_t_stage: no
+  ca_path_t1_det: no
+  ca_path_t2_det: no
+  ca_path_t3_det: no
+  ca_path_t4_det: no
   naaccr_path_n_cd: no
   ca_path_n_stage: no
   ca_path_n1_det: no
@@ -50,11 +50,11 @@ columns:
   naaccr_path_stage_cd: no
   ca_path_group_stage: no
   naaccr_clin_t_cd: no
-  ca_clin_t_stage: no
-  ca_clin_t1_det: no
-  ca_clin_t2_det: no
-  ca_clin_t3_det: no
-  ca_clin_t4_det: no
+  ca_clin_t_stage: yes
+  ca_clin_t1_det: yes
+  ca_clin_t2_det: yes
+  ca_clin_t3_det: yes
+  ca_clin_t4_det: yes
   naaccr_clin_n_cd: no
   ca_clin_n_stage: no
   ca_clin_n1_det: no
