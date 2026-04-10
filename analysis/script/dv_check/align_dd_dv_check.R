@@ -16,15 +16,12 @@ alignment_manifest <- tibble(
   site = c('DFCI', 'MSK', 'UHN', 'VICC'),
   # data dictionary is going in to test the "should never happen" case when we have different data dictionaries for two different sites.
   dd_path = dd_path,
+  # makes an assumption of one file per folder - enforced by the loving manual file work I did:
   cur_path = c(
-    path(cur_stub, 'DFCI', '2024-01-30 NSCLC Phase 2 New Submission.csv'),
-    path(cur_stub, 'MSK', 'BPC_MSK_NSCLCPh2_Full Cohort_09-May-2025.csv'),
-    path(
-      cur_stub,
-      'UHN',
-      'UHN NSCLC Phase 2 Cohort Production Post Comples Queries Round 1.csv'
-    ),
-    path(cur_stub, 'VICC', 'VICC_GENIEBPCNSCLCPhase2_20240824_reviewed.csv')
+    dir_ls(path(cur_stub, 'DFCI')),
+    dir_ls(path(cur_stub, 'MSK')),
+    dir_ls(path(cur_stub, 'UHN')),
+    dir_ls(path(cur_stub, 'VICC'))
   )
 )
 
