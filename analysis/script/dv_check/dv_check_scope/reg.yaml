@@ -56,7 +56,7 @@ columns:
   dx_reg_start_int: yes
   dx_reg_start_int_mos: no
   dx_reg_start_int_yrs: no
-  dx_reg_end_any_int: no
+  dx_reg_end_any_int: yes
   dx_reg_end_any_int_mos: no
   dx_reg_end_any_int_yrs: no
   dx_reg_end_all_int: no
