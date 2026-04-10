@@ -3,6 +3,9 @@ library(fs)
 library(purrr)
 purrr::walk(.x = fs::dir_ls(fs::path("R")), .f = source)
 
+# For each (table_name = key_cols) entry in `spec`, restrict tables_1[[name]]
+# and tables_2[[name]] to rows whose key tuple (1) appears in both tables and
+# (2) appears exactly once in each. Returns both tables objects in a list.
 tables_new <- readr::read_rds(here(path(
   'data',
   'dv',
@@ -91,7 +94,19 @@ convenient_hashes <- intersect(
 tables_new <- restrict_by_ca_hash(tables_new, convenient_hashes)
 tables_legacy <- restrict_by_ca_hash(tables_legacy, convenient_hashes)
 
+tables_new <- remove_patients(tables_new, "GENIE-DFCI-003677")
+tables_legacy <- remove_patients(tables_legacy, "GENIE-DFCI-003677")
 tables_new <- remap_ca_seq(tables_new, ref_tables = tables_legacy)
+
+tab_list <- restrict_to_shared_unique(
+  tables_new,
+  tables_legacy,
+  spec = list(reg = c("record_id", "ca_seq", "drugs_startdt_int_1"))
+)
+
+tables_new <- tab_list[[1]]
+tables_legacy <- tab_list[[2]]
+
 
 dir_out <- here('data', 'dv', 'layer_2_derived_tables')
 readr::write_rds(tables_legacy, path(dir_out, 'comparable_tables_legacy.rds'))

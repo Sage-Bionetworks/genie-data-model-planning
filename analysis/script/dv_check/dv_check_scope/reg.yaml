@@ -1,14 +1,15 @@
 table: reg
 sort_by:
 - record_id
-- drugs_drug_1
+- ca_seq
+- regimen_number
 columns:
   cohort: no
   phase: no
   record_id: yes
   institution: no
-  ca_seq: no
-  regimen_number: no
+  ca_seq: yes 
+  regimen_number: yes
   regimen_number_within_cancer: no
   redcap_ca_index: no
   drugs_num: no

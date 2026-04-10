@@ -52,3 +52,15 @@ waldo::compare(
   arrange(tables_new$ca_ind, record_id, ca_seq),
   tolerance = 1e-6
 )
+
+arrange(tables_leg$ca_ind, record_id, ca_seq)[1553, ] %>% glimpse
+arrange(tables_new$ca_ind, record_id, ca_seq)[1553, ] %>% glimpse
+
+
+test_that(
+  "Same set of record_id|ca_seq values in ca_ind table",
+  expect_setequal(
+    pull_composite_id(tables_leg, "reg", record_id, ca_seq),
+    pull_composite_id(tables_new, "reg", record_id, ca_seq)
+  )
+)

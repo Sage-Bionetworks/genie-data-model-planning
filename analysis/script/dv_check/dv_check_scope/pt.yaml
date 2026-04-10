@@ -23,7 +23,7 @@ columns:
   age_last_fu_yrs: no
   hybrid_death_int: yes
   age_death_yrs: no
-  hybrid_death_source: yes
+  hybrid_death_source: no
   n_cancers: no
   n_cancers_index: no
   n_regimens_pt: no

@@ -10,6 +10,7 @@ columns:
   release_version: no
   tr_eligible: yes
   ca_seq: yes
+  ca_stage_iv: yes
   redcap_ca_index: yes
   dob_ca_dx_days: yes
   dob_ca_dx_mos: yes
@@ -31,8 +32,8 @@ columns:
   naaccr_laterality_cd: no
   ca_grade: no
   best_ajcc_stage_cd: no
-  stage_dx: no
-  stage_dx_iv: no 
+  stage_dx: yes
+  stage_dx_iv: yes 
   ca_tnm_edition_num: no
   naaccr_tnm_path_desc: no
   naaccr_path_t_cd: yes
