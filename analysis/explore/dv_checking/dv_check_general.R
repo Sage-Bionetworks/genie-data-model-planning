@@ -76,7 +76,6 @@ tables_leg$reg <- tables_leg$reg %>%
 # tables_leg$reg <- tables_leg$reg %>%
 #   dplyr::mutate(across(drugs_startdt_int_5, as.double))
 
-
 waldo::compare(
   arrange(tables_leg$reg, record_id, ca_seq, regimen_number),
   arrange(tables_new$reg, record_id, ca_seq, regimen_number),
