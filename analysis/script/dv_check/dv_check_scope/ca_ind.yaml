@@ -6,14 +6,14 @@ columns:
   phase: no
   cohort: no
   record_id: yes
-  institution: no
+  institution: yes
   release_version: no
   tr_eligible: yes
   ca_seq: yes
   redcap_ca_index: yes
   dob_ca_dx_days: yes
-  dob_ca_dx_mos: no
-  dob_ca_dx_yrs: no
+  dob_ca_dx_mos: yes
+  dob_ca_dx_yrs: yes 
   ca_dx_how: yes
   dob_next_ca_days: no
   dob_next_ca_mos: no
