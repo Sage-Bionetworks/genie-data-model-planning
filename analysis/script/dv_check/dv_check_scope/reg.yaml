@@ -53,7 +53,7 @@ columns:
   dx_drug_end_or_lastadm_int_3: yes
   dx_drug_end_or_lastadm_int_4: yes
   dx_drug_end_or_lastadm_int_5: no # same 3 cases have a problem, not surprising and not and issue.
-  dx_reg_start_int: no
+  dx_reg_start_int: yes
   dx_reg_start_int_mos: no
   dx_reg_start_int_yrs: no
   dx_reg_end_any_int: no
