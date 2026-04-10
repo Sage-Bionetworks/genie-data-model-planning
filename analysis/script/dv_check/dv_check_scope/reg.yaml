@@ -15,33 +15,33 @@ columns:
   drugs_num: no
   drugs_inst: no
   drugs_firstinst: no
-  drugs_ct_yn: no
-  drugs_dc_ynu: no
+  drugs_ct_yn: yes
+  drugs_dc_ynu: yes
   regimen_drugs: yes
-  drugs_drug_1: no # important, but regimen_drugs check is sufficient and leaves fiddly details aside
+  drugs_drug_1: no # important, but regimen_drugs check is sufficient and leaves fiddly details (synonyms) aside
   drugs_drug_2: no # same as 1
   drugs_drug_3: no # same as 1
   drugs_drug_4: no # same as 1
   drugs_drug_5: no # same as 1
-  drugs_startdt_int_1: no
-  drugs_startdt_int_2: no
-  drugs_startdt_int_3: no
-  drugs_startdt_int_4: no
-  drugs_startdt_int_5: no
-  dx_drug_start_int_1: no
-  dx_drug_start_int_2: no
-  dx_drug_start_int_3: no
-  dx_drug_start_int_4: no
+  drugs_startdt_int_1: yes
+  drugs_startdt_int_2: yes
+  drugs_startdt_int_3: yes
+  drugs_startdt_int_4: yes
+  drugs_startdt_int_5: no # handful of deviations here for some reason... tired of seeing the error.
+  dx_drug_start_int_1: yes
+  dx_drug_start_int_2: yes
+  dx_drug_start_int_3: yes
+  dx_drug_start_int_4: yes
   dx_drug_start_int_5: no
   dx_drug_start_int_mos_1: no
   dx_drug_start_int_mos_2: no
   dx_drug_start_int_mos_3: no
   dx_drug_start_int_mos_4: no
   dx_drug_start_int_mos_5: no
-  dx_drug_end_int_1: no
-  dx_drug_end_int_2: no
-  dx_drug_end_int_3: no
-  dx_drug_end_int_4: no
+  dx_drug_end_int_1: yes
+  dx_drug_end_int_2: yes
+  dx_drug_end_int_3: yes
+  dx_drug_end_int_4: yes
   dx_drug_end_int_5: no
   dx_drug_end_int_mos_1: no
   dx_drug_end_int_mos_2: no

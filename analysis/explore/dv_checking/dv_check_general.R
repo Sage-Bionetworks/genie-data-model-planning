@@ -65,6 +65,18 @@ cli::cli_inform(
   "Columns being checked in reg: {.code tables_leg$reg}: {.val {names(tables_leg$reg)}}"
 )
 
+# Fixing an obvious problem with the legacy release:  Whitespace in regimen_drugs that's been preserved:
+trim_drug_spaces <- function(x) {
+  stringr::str_remove_all(x, "\\s+(?=,)|\\s+$")
+}
+tables_leg$reg <- tables_leg$reg %>%
+  dplyr::mutate(regimen_drugs = trim_drug_spaces(regimen_drugs))
+
+# Couple column type conversions so I can check easier:
+# tables_leg$reg <- tables_leg$reg %>%
+#   dplyr::mutate(across(drugs_startdt_int_5, as.double))
+
+
 waldo::compare(
   arrange(tables_leg$reg, record_id, ca_seq, regimen_number),
   arrange(tables_new$reg, record_id, ca_seq, regimen_number),

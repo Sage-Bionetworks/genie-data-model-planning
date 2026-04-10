@@ -86,6 +86,10 @@ names(multisite_list) <- pull(multisite_tables, name)
 
 multisite_list <- propagate_ca_seq(multisite_list)
 
+multisite_list <- derive_dx_drug_int(
+  multisite_list
+)
+
 readr::write_rds(
   multisite_list,
   here(out_dir_dv, 'table_list.rds')

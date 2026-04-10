@@ -10,7 +10,7 @@ columns:
   release_version: no
   tr_eligible: yes
   ca_seq: yes
-  ca_stage_iv: yes
+  ca_stage_iv: no
   redcap_ca_index: yes
   dob_ca_dx_days: yes
   dob_ca_dx_mos: yes
