@@ -46,6 +46,7 @@ synLogin()
 
 inst_ignore <- c('DUKE', 'PROV', 'SAGE', 'UCSF')
 
+# This obviously doesn't work because i isn't defined:
 curated_dat <- get_syn_children_df(i) |>
   select(institution = name, inst_id = id) |>
   mutate(

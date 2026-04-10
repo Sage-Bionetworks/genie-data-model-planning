@@ -9,7 +9,8 @@ dd_path <- here(
   'nonphi_v388_PRISSMM_Dictionary_NSCLC_BPC_P2.csv'
 )
 
-cur_stub <- here('data-raw', 'bpc', 'step1-curated', 'NSCLC2')
+# I ended up grabbing these manually to get the latest version:
+cur_stub <- here('data-raw', 'bpc', 'step1-curated', 'NSCLC2_manual_validation')
 
 alignment_manifest <- tibble(
   site = c('DFCI', 'MSK', 'UHN', 'VICC'),
