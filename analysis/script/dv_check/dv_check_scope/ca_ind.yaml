@@ -31,16 +31,16 @@ columns:
   naaccr_laterality_cd: no
   ca_grade: no
   best_ajcc_stage_cd: no
-  stage_dx: yes
+  stage_dx: no
   stage_dx_iv: no 
   ca_tnm_edition_num: no
   naaccr_tnm_path_desc: no
-  naaccr_path_t_cd: no
-  ca_path_t_stage: no
-  ca_path_t1_det: no
-  ca_path_t2_det: no
-  ca_path_t3_det: no
-  ca_path_t4_det: no
+  naaccr_path_t_cd: yes
+  ca_path_t_stage: yes
+  ca_path_t1_det: yes
+  ca_path_t2_det: yes
+  ca_path_t3_det: yes
+  ca_path_t4_det: yes
   naaccr_path_n_cd: no
   ca_path_n_stage: no
   ca_path_n1_det: no

@@ -47,7 +47,6 @@ cli::cli_inform(
   "Columns being checked in ca_ind: {.code tables_leg$ca_ind}: {.val {names(tables_leg$ca_ind)}}"
 )
 
-
 waldo::compare(
   arrange(tables_leg$ca_ind, record_id, ca_seq),
   arrange(tables_new$ca_ind, record_id, ca_seq),
