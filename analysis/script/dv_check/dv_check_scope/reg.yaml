@@ -59,7 +59,7 @@ columns:
   dx_reg_end_any_int: yes
   dx_reg_end_any_int_mos: no
   dx_reg_end_any_int_yrs: no
-  dx_reg_end_all_int: no
+  dx_reg_end_all_int: yes
   dx_reg_end_all_int_mos: no
   dx_reg_end_all_int_yrs: no
   os_d_status: no
