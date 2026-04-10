@@ -22,19 +22,17 @@ columns:
   first_index_ca_mos: no
   first_index_ca_yrs: no
   naaccr_first_contact_int: no
-  age_dx: no
-  ca_d_site: no
-  ca_type: no
+  age_dx: yes
+  ca_d_site: yes
+  ca_type: yes
   naaccr_histology_cd: no
   ca_hist_adeno_squamous: no
   naaccr_behavior_cd: no
   naaccr_laterality_cd: no
   ca_grade: no
   best_ajcc_stage_cd: no
-  stage_dx: no
-  stage_dx_iv: no
-  ca_stage_iv: yes
-  ca_stage: yes
+  stage_dx: yes
+  stage_dx_iv: yes
   ca_tnm_edition_num: no
   naaccr_tnm_path_desc: no
   naaccr_path_t_cd: no

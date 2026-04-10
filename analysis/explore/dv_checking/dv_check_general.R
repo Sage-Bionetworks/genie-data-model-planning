@@ -16,6 +16,7 @@ tables_new <- readr::read_rds(here(
   'comparable_tables_new.rds'
 ))
 
+
 scope_dir <- here('analysis', 'script', 'dv_check', 'dv_check_scope')
 tables_leg <- apply_column_scope(tables_leg, scope_dir)
 tables_new <- apply_column_scope(tables_new, scope_dir)
