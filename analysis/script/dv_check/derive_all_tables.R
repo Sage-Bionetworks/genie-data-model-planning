@@ -21,7 +21,9 @@ dv_code_dispatch <- function(tab, dd_sub, form_name) {
   if (form_name %in% "patient") {
     derive_pt(tab, dd_sub)
   } else if (form_name %in% "cancer_diagnosis") {
-    derive_ca_dx(tab, dd_sub)
+    derive_ca_dx(tab, dd_sub) |>
+      # special lung wrapper to integrate TNM backup to stage_dx and stage_dx_iv.
+      derive_stage_dx_nsclc()
   } else if (form_name %in% "ca_directed_drugs") {
     derive_reg(tab, dd_sub)
   } else if (form_name %in% "ca_directed_radtx") {

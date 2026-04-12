@@ -10,7 +10,8 @@ columns:
   release_version: no
   tr_eligible: yes
   ca_seq: yes
-  ca_stage_iv: no
+  ca_stage_iv: no # would love to check these, they rudely don't release them (we should).
+  ca_stage: no # would love to check these, they rudely don't release them (we should).
   redcap_ca_index: yes
   dob_ca_dx_days: yes
   dob_ca_dx_mos: yes
@@ -33,7 +34,7 @@ columns:
   ca_grade: no
   best_ajcc_stage_cd: yes
   stage_dx: no
-  stage_dx_iv: no 
+  stage_dx_iv: no
   ca_tnm_edition_num: no
   naaccr_tnm_path_desc: no
   naaccr_path_t_cd: yes
@@ -64,7 +65,7 @@ columns:
   naaccr_clin_m_cd: no
   naaccr_clin_stage_cd: no
   naaccr_seer_sum_stage: no
-  ca_tx_pre_path_stage: no
+  ca_tx_pre_path_stage: yes 
   naaccr_tnm_edition_num: no
   ca_dmets_yn: no
   ca_first_dmets1: no 
