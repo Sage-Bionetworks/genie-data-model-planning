@@ -31,7 +31,7 @@ columns:
   naaccr_behavior_cd: no
   naaccr_laterality_cd: no
   ca_grade: no
-  best_ajcc_stage_cd: no
+  best_ajcc_stage_cd: yes
   stage_dx: yes
   stage_dx_iv: yes 
   ca_tnm_edition_num: no
