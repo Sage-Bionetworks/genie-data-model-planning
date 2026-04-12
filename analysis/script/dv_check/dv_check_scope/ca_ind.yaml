@@ -32,8 +32,8 @@ columns:
   naaccr_laterality_cd: no
   ca_grade: no
   best_ajcc_stage_cd: yes
-  stage_dx: yes
-  stage_dx_iv: yes 
+  stage_dx: no
+  stage_dx_iv: no 
   ca_tnm_edition_num: no
   naaccr_tnm_path_desc: no
   naaccr_path_t_cd: yes
@@ -49,15 +49,15 @@ columns:
   ca_path_n3_det: no
   naaccr_path_m_cd: no
   naaccr_path_stage_cd: no
-  ca_path_group_stage: no
+  ca_path_group_stage: yes
   naaccr_clin_t_cd: no
   ca_clin_t_stage: yes
   ca_clin_t1_det: yes
   ca_clin_t2_det: yes
-  ca_clin_t3_det: yes
-  ca_clin_t4_det: yes
+  ca_clin_t3_det: no # not used in NSCLC logic so we ignore for now.
+  ca_clin_t4_det: no 
   naaccr_clin_n_cd: no
-  ca_clin_n_stage: no
+  ca_clin_n_stage: yes
   ca_clin_n1_det: no
   ca_clin_n2_det: no
   ca_clinical_n3_det: no
