@@ -10,7 +10,7 @@ columns:
   institution: no
   ca_seq: yes 
   regimen_number: yes
-  regimen_number_within_cancer: no
+  regimen_number_within_cancer: yes
   redcap_ca_index: no
   drugs_num: yes
   drugs_inst: yes
