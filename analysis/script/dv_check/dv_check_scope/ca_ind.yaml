@@ -43,7 +43,7 @@ columns:
   ca_path_t3_det: no
   ca_path_t4_det: no
   naaccr_path_n_cd: no
-  ca_path_n_stage: no
+  ca_path_n_stage: yes
   ca_path_n1_det: no
   ca_path_n2_det: no
   ca_path_n3_det: no
