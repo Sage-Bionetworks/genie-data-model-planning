@@ -23,7 +23,7 @@ extract_help <- function(nd, form, to_extract = 'tab') {
 }
 
 # The coding in this script is intentionally verbose.
-# These functions, such as derive_ca_dx() are bound to become monstrously large over time.
+# These functions, such as build_dv_tab_ca_dx() are bound to become monstrously large over time.
 # If we call them in some massive purrr call it will probably get in the way of diagnosis as we work.
 
 #############################
@@ -40,7 +40,7 @@ proto_ca_dx_dd <- extract_help(
   form = 'cancer_diagnosis',
   to_extract = 'dd'
 )
-derived_ca_dx <- geniedv::derive_ca_dx(
+derived_ca_dx <- geniedv::build_dv_tab_ca_dx(
   raw_ca_dx = proto_ca_dx,
   dat_dict_sub = proto_ca_dx_dd
 )
@@ -81,7 +81,7 @@ proto_pt_dd <- extract_help(
   form = 'patient',
   to_extract = 'dd'
 )
-derived_pt <- derive_pt(
+derived_pt <- build_dv_tab_pt(
   tab = proto_pt,
   dat_dict_sub = proto_pt_dd
 )
@@ -105,7 +105,7 @@ proto_reg_dd <- extract_help(
   form = 'ca_directed_drugs',
   to_extract = 'dd'
 )
-derived_reg <- derive_reg(
+derived_reg <- build_dv_tab_reg(
   tab = proto_reg,
   dat_dict_sub = proto_reg_dd
 )
@@ -128,7 +128,7 @@ proto_rad_dd <- extract_help(
   form = 'ca_directed_radtx',
   to_extract = 'dd'
 )
-derived_rad <- derive_rad(
+derived_rad <- build_dv_tab_rad(
   tab = proto_rad,
   dat_dict_sub = proto_rad_dd
 )
@@ -152,7 +152,7 @@ proto_path_dd <- extract_help(
   form = 'prissmm_pathology',
   to_extract = 'dd'
 )
-derived_path <- derive_path(
+derived_path <- build_dv_tab_path(
   tab = proto_path,
   dat_dict_sub = proto_path_dd
 )
@@ -176,7 +176,7 @@ proto_img_dd <- extract_help(
   form = 'prissmm_imaging',
   to_extract = 'dd'
 )
-derived_img <- derive_img(
+derived_img <- build_dv_tab_img(
   tab = proto_img,
   dat_dict_sub = proto_img_dd
 )
@@ -199,7 +199,7 @@ proto_med_onc_dd <- extract_help(
   form = 'prissmm_med_onc_assessment',
   to_extract = 'dd'
 )
-derived_med_onc <- derive_med_onc(
+derived_med_onc <- build_dv_tab_med_onc(
   tab = proto_med_onc,
   dat_dict_sub = proto_med_onc_dd
 )
@@ -224,7 +224,7 @@ proto_cpt_dd <- extract_help(
   form = 'cancer_panel_test',
   to_extract = 'dd'
 )
-derived_cpt <- derive_cpt(
+derived_cpt <- build_dv_tab_cpt(
   tab = proto_cpt,
   dat_dict_sub = proto_cpt_dd
 )
