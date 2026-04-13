@@ -5,11 +5,11 @@ columns:
   cohort: no
   phase: no
   record_id: yes
-  institution: no
+  institution: yes
   cpt_number: yes
-  ca_seq: no # yep
+  ca_seq: yes # yep
   cpt_n_ca_seq: no
-  cpt_order_int: no # yes
+  cpt_order_int: yes # yes
   cpt_seq_date: no
   dob_cpt_report_days: no # yes
   dob_cpt_report_mos: no
@@ -24,7 +24,7 @@ columns:
   path_proc_cpt_rep_days: no # yes
   path_proc_cpt_rep_mos: no
   path_proc_cpt_rep_yrs: no
-  path_proc_number: no
+  path_proc_number: no # yes
   path_rep_number: no
   cpt_genie_sample_id: no
   cpt_oncotree_code: no

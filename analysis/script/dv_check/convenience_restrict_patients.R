@@ -94,14 +94,15 @@ convenient_hashes <- intersect(
 tables_new <- restrict_by_ca_hash(tables_new, convenient_hashes)
 tables_legacy <- restrict_by_ca_hash(tables_legacy, convenient_hashes)
 
-tables_new <- remove_patients(tables_new, "GENIE-DFCI-003677")
-tables_legacy <- remove_patients(tables_legacy, "GENIE-DFCI-003677")
 tables_new <- remap_ca_seq(tables_new, ref_tables = tables_legacy)
 
 tab_list <- restrict_to_shared_unique(
   tables_new,
   tables_legacy,
-  spec = list(reg = c("record_id", "ca_seq", "drugs_startdt_int_1"))
+  spec = list(
+    reg = c("record_id", "ca_seq", "drugs_startdt_int_1"),
+    cpt = c('record_id', 'ca_seq', 'dob_cpt_report_days')
+  )
 )
 
 tables_new <- tab_list[[1]]

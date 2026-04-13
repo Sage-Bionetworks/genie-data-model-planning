@@ -33,6 +33,9 @@ cli::cli_inform(
   "Columns being checked in cpt: {.code tables_leg$cpt}: {.val {names(tables_leg$cpt)}}"
 )
 
+tables_leg$cpt %<>% arrange(tables_leg$cpt, record_id, ca_seq, cpt_number)
+tables_new$cpt %<>% arrange(tables_new$cpt, record_id, ca_seq, cpt_number)
+
 print(
   waldo::compare(
     tables_leg$cpt,
