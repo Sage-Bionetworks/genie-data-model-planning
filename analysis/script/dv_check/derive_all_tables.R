@@ -92,6 +92,10 @@ multisite_list <- derive_dx_drug_int(
   multisite_list
 )
 
+multisite_list <- derive_dx_cpt_int(
+  multisite_list
+)
+
 readr::write_rds(
   multisite_list,
   here(out_dir_dv, 'table_list.rds')
