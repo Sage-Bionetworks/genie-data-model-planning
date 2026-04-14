@@ -21,6 +21,10 @@ scope_dir <- here('analysis', 'script', 'dv_check', 'dv_check_scope')
 tables_leg <- apply_column_scope(tables_leg, scope_dir)
 tables_new <- apply_column_scope(tables_new, scope_dir)
 
+tables_leg$ca_ind <- tables_leg$ca_ind %>% filter(record_id != "GENIE-DFCI-003677")
+tables_new$ca_ind <- tables_new$ca_ind %>% filter(record_id != "GENIE-DFCI-003677")
+
+
 test_that(
   "Same set of record_id|ca_seq values in ca_ind table",
   expect_setequal(

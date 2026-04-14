@@ -15,7 +15,7 @@ columns:
   dob_cpt_report_mos: no
   dob_cpt_report_yrs: no
   cpt_report_post_death: no
-  dx_cpt_rep_days: yes # yes
+  dx_cpt_rep_days: yes  # yes
   dx_cpt_rep_mos: no
   dx_cpt_rep_yrs: no
   dx_path_proc_cpt_days: no # yes
@@ -26,7 +26,7 @@ columns:
   path_proc_cpt_rep_yrs: no
   path_proc_number: no # yes
   path_rep_number: no
-  cpt_genie_sample_id: no
+  cpt_genie_sample_id: yes
   cpt_oncotree_code: no
   sample_type: no
   cpt_seq_assay_id: no
