@@ -5,9 +5,9 @@ columns:
   cohort: no
   phase: no
   record_id: yes
-  institution: no
-  scan_number: no
-  image_scan_int: no
+  institution: yes 
+  scan_number: yes
+  image_scan_int: yes
   dx_scan_days: no
   dx_scan_mos: no
   dx_scan_yrs: no

@@ -19,6 +19,7 @@ script_runner('derive_all_tables.R')
 script_runner('convenience_restrict_patients.R')
 
 # script_runner('dv_check_pt.R')
-script_runner('dv_check_ca_ind.R')
+# script_runner('dv_check_ca_ind.R')
 # script_runner('dv_check_reg.R')
 # script_runner('dv_check_cpt.R')
+script_runner('dv_check_img.R')
