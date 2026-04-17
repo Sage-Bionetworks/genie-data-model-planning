@@ -6,11 +6,11 @@ columns:
   phase: no
   record_id: yes
   institution: no
-  path_proc_number: no
+  path_proc_number: yes
   path_rep_number: no
   path_proc_inst: no
   path_rep_inst: no
-  path_proc_int: no
+  path_proc_int: yes
   dx_path_proc_days: no
   dx_path_proc_mos: no
   dx_path_proc_yrs: no

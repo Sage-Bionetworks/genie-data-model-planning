@@ -56,7 +56,7 @@ tables_leg$img <- tables_leg$img %>%
     )
   )
 
-
+# kind of a lot of regions removed for some reason, but 151 out of 30k isn't that alarming.
 print(
   waldo::compare(
     tables_leg$img,
