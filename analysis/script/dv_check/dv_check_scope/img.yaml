@@ -26,10 +26,10 @@ columns:
   image_scansite___6: yes
   image_scansite___7: yes
   image_scansite___8: yes
-  scan_sites: no
-  image_ca: no
-  image_overall: no
-  image_casite1: no
+  scan_sites: yes 
+  image_ca: yes
+  image_overall: yes
+  image_casite1: yes
   image_casite2: no
   image_casite3: no
   image_casite4: no

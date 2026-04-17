@@ -44,6 +44,9 @@ tables_new$img <- filter(tables_new$img, record_id != "GENIE-MSK-P-0042033")
 # single row with a difference on scan type - obviously some hard coding or data versioning going on.
 tables_new$img <- tables_new$img[-7876, ]
 tables_leg$img <- tables_leg$img[-7876, ]
+# Same for image_ca
+tables_new$img <- tables_new$img[-8736, ]
+tables_leg$img <- tables_leg$img[-8736, ]
 
 
 print(
