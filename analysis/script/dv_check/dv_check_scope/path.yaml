@@ -7,16 +7,16 @@ columns:
   record_id: yes
   institution: no
   path_proc_number: yes
-  path_rep_number: no
+  path_rep_number: yes 
   path_proc_inst: no
   path_rep_inst: no
   path_proc_int: yes
   dx_path_proc_days: no
   dx_path_proc_mos: no
   dx_path_proc_yrs: no
-  path_proc_type: no
-  path_proc: no
-  path_proc_margins: no
+  path_proc_type: yes
+  path_proc: yes
+  path_proc_margins: yes
   path_num_spec: no
   path_site1: no
   path_site2: no
