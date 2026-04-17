@@ -72,31 +72,31 @@ columns:
   path_insitu25: yes
   path_ca_inv_any: no
   n_specimen_inv: no
-  path_ca1: no
-  path_ca2: no
-  path_ca3: no
-  path_ca4: no
-  path_ca5: no
-  path_ca6: no
-  path_ca7: no
-  path_ca8: no
-  path_ca9: no
-  path_ca10: no
-  path_ca11: no
-  path_ca12: no
-  path_ca13: no
-  path_ca14: no
-  path_ca15: no
-  path_ca16: no
-  path_ca17: no
-  path_ca18: no
-  path_ca19: no
-  path_ca20: no
-  path_ca21: no
-  path_ca22: no
-  path_ca23: no
-  path_ca24: no
-  path_ca25: no
+  path_ca1: yes
+  path_ca2: yes
+  path_ca3: yes
+  path_ca4: yes
+  path_ca5: yes
+  path_ca6: yes
+  path_ca7: yes
+  path_ca8: yes
+  path_ca9: yes
+  path_ca10: yes
+  path_ca11: yes
+  path_ca12: yes
+  path_ca13: yes
+  path_ca14: yes
+  path_ca15: yes
+  path_ca16: yes
+  path_ca17: yes
+  path_ca18: yes
+  path_ca19: yes
+  path_ca20: yes
+  path_ca21: yes
+  path_ca22: yes
+  path_ca23: yes
+  path_ca24: yes
+  path_ca25: yes
   path_ca_type1: no
   path_ca_type2: no
   path_ca_type3: no
