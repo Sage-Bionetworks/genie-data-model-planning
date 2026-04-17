@@ -15,8 +15,8 @@ columns:
   dx_path_proc_mos: no
   dx_path_proc_yrs: no
   path_proc_type: yes
-  path_proc: no
-  path_proc_margins: no
+  path_proc: yes
+  path_proc_margins: yes
   path_num_spec: no
   path_site1: no
   path_site2: no
