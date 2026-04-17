@@ -56,6 +56,18 @@ tables_leg$path %<>%
   ungroup(.) %>%
   drop_dots()
 
+tables_leg$path <- tables_leg$path %>%
+  mutate(
+    across(
+      matches("path_site[0-9]+"),
+      ~ str_replace_all(.x, "\\s+", " ")
+    )
+  )
+
+# handful of likely hard code nonsense exceptions noticed with path_site1...25.
+path_site_exclusions <- c(718, 2281, 2723, 2820, 3308, 3528)
+tables_leg$path <- tables_leg$path[-path_site_exclusions, ]
+tables_new$path <- tables_new$path[-path_site_exclusions, ]
 
 # kind of a lot of regions removed for some reason, but 151 out of 30k isn't that alarming.
 print(
