@@ -18,14 +18,14 @@ columns:
   image_inst_perf: yes
   image_inst_inter: yes 
   image_scan_type: yes
-  image_scansite___1: no
-  image_scansite___2: no
-  image_scansite___3: no
-  image_scansite___4: no
-  image_scansite___5: no
-  image_scansite___6: no
-  image_scansite___7: no
-  image_scansite___8: no
+  image_scansite___1: yes
+  image_scansite___2: yes
+  image_scansite___3: yes
+  image_scansite___4: yes
+  image_scansite___5: yes
+  image_scansite___6: yes
+  image_scansite___7: yes
+  image_scansite___8: yes
   scan_sites: no
   image_ca: no
   image_overall: no

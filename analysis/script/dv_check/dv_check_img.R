@@ -41,6 +41,10 @@ tables_new$img <- arrange(tables_new$img, record_id, image_scan_int)
 tables_leg$img <- filter(tables_leg$img, record_id != "GENIE-MSK-P-0042033")
 tables_new$img <- filter(tables_new$img, record_id != "GENIE-MSK-P-0042033")
 
+# single row with a difference on scan type - obviously some hard coding or data versioning going on.
+tables_new$img <- tables_new$img[-7876, ]
+tables_leg$img <- tables_leg$img[-7876, ]
+
 
 print(
   waldo::compare(
