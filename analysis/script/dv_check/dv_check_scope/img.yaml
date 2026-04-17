@@ -15,9 +15,9 @@ columns:
   dx_ref_scan_days: no
   dx_ref_scan_mos: no
   dx_ref_scan_yrs: no
-  image_inst_perf: no
-  image_inst_inter: no
-  image_scan_type: no
+  image_inst_perf: yes
+  image_inst_inter: yes 
+  image_scan_type: yes
   image_scansite___1: no
   image_scansite___2: no
   image_scansite___3: no

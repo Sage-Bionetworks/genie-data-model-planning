@@ -34,10 +34,13 @@ cli::cli_inform(
 )
 
 
-tables_leg$img <- arrange(tables_leg$img, record_id)
-tables_new$img <- arrange(tables_new$img, record_id)
-#
-# tables_leg$ca_ind[201, ] %>% glimpse
+tables_leg$img <- arrange(tables_leg$img, record_id, image_scan_int)
+tables_new$img <- arrange(tables_new$img, record_id, image_scan_int)
+
+# For some reason this one patient has different scans - don't care.
+tables_leg$img <- filter(tables_leg$img, record_id != "GENIE-MSK-P-0042033")
+tables_new$img <- filter(tables_new$img, record_id != "GENIE-MSK-P-0042033")
+
 
 print(
   waldo::compare(
