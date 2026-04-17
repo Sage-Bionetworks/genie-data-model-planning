@@ -48,6 +48,14 @@ tables_leg$img <- tables_leg$img[-7876, ]
 tables_new$img <- tables_new$img[-8736, ]
 tables_leg$img <- tables_leg$img[-8736, ]
 
+tables_leg$img <- tables_leg$img %>%
+  mutate(
+    across(
+      matches("image_casite[0-9]+"),
+      ~ str_replace_all(.x, "\\s+", " ")
+    )
+  )
+
 
 print(
   waldo::compare(

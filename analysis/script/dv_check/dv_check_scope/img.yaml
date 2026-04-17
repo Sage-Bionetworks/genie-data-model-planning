@@ -30,18 +30,18 @@ columns:
   image_ca: yes
   image_overall: yes
   image_casite1: yes
-  image_casite2: no
-  image_casite3: no
-  image_casite4: no
-  image_casite5: no
-  image_casite6: no
-  image_casite7: no
-  image_casite8: no
-  image_casite9: no
-  image_casite10: no
-  image_casite11: no
-  image_casite12: no
-  image_casite13: no
-  image_casite14: no
-  image_casite15: no
+  image_casite2: yes
+  image_casite3: yes
+  image_casite4: yes
+  image_casite5: yes
+  image_casite6: yes
+  image_casite7: yes
+  image_casite8: yes
+  image_casite9: yes
+  image_casite10: yes
+  image_casite11: yes
+  image_casite12: yes
+  image_casite13: yes
+  image_casite14: yes
+  image_casite15: yes
   release_version: no
