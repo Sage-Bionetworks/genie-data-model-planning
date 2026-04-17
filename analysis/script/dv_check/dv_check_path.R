@@ -42,6 +42,21 @@ tables_leg$path <- filter(tables_leg$path, record_id != "GENIE-DFCI-003677")
 tables_new$path <- filter(tables_new$path, record_id != "GENIE-DFCI-003677")
 
 
+# This is a substantial restriction but I can't figure out what the logic is in ordering for path_rep_number so... here we go...
+tables_new$path %<>%
+  group_by(record_id, path_proc_number) %>%
+  mutate(.n_within = n()) %>%
+  filter(.n_within %in% 1) %>%
+  ungroup(.) %>%
+  drop_dots()
+tables_leg$path %<>%
+  group_by(record_id, path_proc_number) %>%
+  mutate(.n_within = n()) %>%
+  filter(.n_within %in% 1) %>%
+  ungroup(.) %>%
+  drop_dots()
+
+
 # kind of a lot of regions removed for some reason, but 151 out of 30k isn't that alarming.
 print(
   waldo::compare(
