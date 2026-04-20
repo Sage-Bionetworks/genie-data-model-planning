@@ -16,18 +16,27 @@ tables_new <- readr::read_rds(here(
   'comparable_tables_new.rds'
 ))
 
-derive_scan_dmets_long(
+scan_first_test <- derive_scan_dmets_long(
   tables_new$img,
   tables_new$ca_ind
 ) %>%
-  derive_scan_dmets_first() %>%
-  glimpse
+  derive_scan_dmets_first()
 
-derive_path_dmets_long(
+path_first_test <- derive_path_dmets_long(
   tables_new$path,
   tables_new$ca_ind,
   cohort_ca_types = c("Non Small Cell Lung Cancer", "Lung Cancer, NOS")
 ) %>%
-  glimpse
-derive_path_dmets_first() %>%
-  glimpse
+  derive_path_dmets_first()
+
+dx_first_test <- derive_dx_dmets_long(
+  tables_new$ca_ind
+) %>%
+  derive_dx_dmets_first(.)
+
+combine_dmets_derivations(
+  scan_first = scan_first_test,
+  path_first = path_first_test,
+  dx_first = dx_first_test,
+  ca_ind = tables_new$ca_ind
+)
