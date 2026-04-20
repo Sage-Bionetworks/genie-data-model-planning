@@ -20,4 +20,11 @@ derive_scan_dmets_long(
   tables_new$img,
   tables_new$ca_ind
 ) %>%
+  derive_scan_dmets_first() %>%
   glimpse
+
+derive_path_dmets_long(
+  tables_new$path,
+  tables_new$ca_ind,
+  cohort_ca_types = c("Non Small Cell Lung Cancer", "Lung Cancer, NOS")
+)
