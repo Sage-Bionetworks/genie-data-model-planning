@@ -17,7 +17,7 @@ tables_new <- readr::read_rds(here(
 ))
 
 derive_scan_dmets_long(
-  tables_new$img
+  tables_new$img,
   tables_new$ca_ind
-)
-  
+) %>%
+  glimpse
