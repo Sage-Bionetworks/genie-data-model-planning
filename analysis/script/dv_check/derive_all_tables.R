@@ -98,7 +98,10 @@ multisite_list <- derive_dx_cpt_int(
 
 multisite_list <- add_dmets_ca_ind(
   tables = multisite_list,
-  cohort_ca_types = c("Non Small Cell Lung Cancer", "Lung Cancer, NOS")
+  cohort_ca_types = c("Non Small Cell Lung Cancer", "Lung Cancer, NOS"),
+  only_full_dmet_scans = F, # made it worse to do TRUE, surprisingly they're taking partial dmet scans.
+  include_indeterminate = F,
+  first_cancer_only = T
 )
 
 

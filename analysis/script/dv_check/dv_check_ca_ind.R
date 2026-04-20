@@ -16,14 +16,14 @@ tables_new <- readr::read_rds(here(
   'comparable_tables_new.rds'
 ))
 
-
 scope_dir <- here('analysis', 'script', 'dv_check', 'dv_check_scope')
 tables_leg <- apply_column_scope(tables_leg, scope_dir)
 tables_new <- apply_column_scope(tables_new, scope_dir)
 
-tables_leg$ca_ind <- tables_leg$ca_ind %>% filter(record_id != "GENIE-DFCI-003677")
-tables_new$ca_ind <- tables_new$ca_ind %>% filter(record_id != "GENIE-DFCI-003677")
-
+tables_leg$ca_ind <- tables_leg$ca_ind %>%
+  filter(record_id != "GENIE-DFCI-003677")
+tables_new$ca_ind <- tables_new$ca_ind %>%
+  filter(record_id != "GENIE-DFCI-003677")
 
 test_that(
   "Same set of record_id|ca_seq values in ca_ind table",
@@ -42,10 +42,6 @@ cli::cli_inform(
 tables_leg$ca_ind <- tables_leg$ca_ind[-c(1170, 1553), ]
 tables_new$ca_ind <- tables_new$ca_ind[-c(1170, 1553), ]
 
-# tables_leg$ca_ind <- arrange(tables_leg$ca_ind, record_id, ca_seq)
-# tables_new$ca_ind <- arrange(tables_new$ca_ind, record_id, ca_seq)
-#
-# tables_leg$ca_ind[201, ] %>% glimpse
 
 print(
   waldo::compare(
@@ -54,3 +50,51 @@ print(
     tolerance = 1e-6
   )
 )
+
+tables_leg$ca_ind[1548, ] %>% glimpse
+tables_new$ca_ind[1548, ] %>% glimpse
+
+tables_new$img %>%
+  filter(record_id %in% 'GENIE-MSK-P-0045653') %>%
+  filter(image_scan_int > 25843 + 638) %>%
+  View(.)
+
+tables_new$path %>%
+  filter(record_id %in% 'GENIE-MSK-P-0045653') %>%
+  filter(path_proc_int > 25843 + 638) %>%
+  View(.)
+
+tables_leg$ca_ind[1438, ] %>% glimpse
+tables_new$ca_ind[1438, ] %>% glimpse
+
+tables_new$img %>%
+  filter(record_id %in% 'GENIE-MSK-P-0042594') %>%
+  filter(image_scan_int > 27185 + 4) %>%
+  View(.)
+
+tables_new$path %>%
+  filter(record_id %in% 'GENIE-MSK-P-0042594') %>%
+  filter(path_proc_int > 27185 + 4) %>%
+  View(.)
+
+# Seems to be mostly down to path stuff.
+#
+#
+# tables_leg$ca_ind[471, ] %>% glimpse
+# tables_new$ca_ind[471, ] %>% glimpse
+#
+# tables_new$img %>%
+#   filter(record_id %in% 'GENIE-DFCI-171102') %>%
+#   filter(image_scan_int > 22866) %>%
+#   filter(str_detect(scan_sites, 'Abdomen')) %>%
+#   View(.)
+#
+#
+# tables_leg$ca_ind[17, ] %>% glimpse
+# tables_new$ca_ind[17, ] %>% glimpse
+#
+#
+# tables_new$img %>%
+#   filter(record_id %in% 'GENIE-DFCI-006106') %>%
+#   filter(image_scan_int > 19857 + 1342 - 1) %>%
+#   View(.)
