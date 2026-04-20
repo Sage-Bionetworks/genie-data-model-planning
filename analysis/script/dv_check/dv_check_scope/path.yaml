@@ -97,31 +97,31 @@ columns:
   path_ca23: yes
   path_ca24: yes
   path_ca25: yes
-  path_ca_type1: no
-  path_ca_type2: no
-  path_ca_type3: no
-  path_ca_type4: no
-  path_ca_type5: no
-  path_ca_type6: no
-  path_ca_type7: no
-  path_ca_type8: no
-  path_ca_type9: no
-  path_ca_type10: no
-  path_ca_type11: no
-  path_ca_type12: no
-  path_ca_type13: no
-  path_ca_type14: no
-  path_ca_type15: no
-  path_ca_type16: no
-  path_ca_type17: no
-  path_ca_type18: no
-  path_ca_type19: no
-  path_ca_type20: no
-  path_ca_type21: no
-  path_ca_type22: no
-  path_ca_type23: no
-  path_ca_type24: no
-  path_ca_type25: no
+  path_ca_type1: yes
+  path_ca_type2: yes
+  path_ca_type3: yes
+  path_ca_type4: yes
+  path_ca_type5: yes
+  path_ca_type6: yes
+  path_ca_type7: yes
+  path_ca_type8: yes
+  path_ca_type9: yes
+  path_ca_type10: yes
+  path_ca_type11: yes
+  path_ca_type12: yes
+  path_ca_type13: yes
+  path_ca_type14: yes
+  path_ca_type15: yes
+  path_ca_type16: yes
+  path_ca_type17: yes
+  path_ca_type18: yes
+  path_ca_type19: yes
+  path_ca_type20: yes
+  path_ca_type21: yes
+  path_ca_type22: yes
+  path_ca_type23: yes
+  path_ca_type24: yes
+  path_ca_type25: yes
   path_ca_hist1: no
   path_ca_hist2: no
   path_ca_hist3: no
