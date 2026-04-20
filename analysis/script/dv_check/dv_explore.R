@@ -39,4 +39,11 @@ combine_dmets_derivations(
   path_first = path_first_test,
   dx_first = dx_first_test,
   ca_ind = tables_new$ca_ind
+) %>%
+  #add_overall_dmets_vars(., tables_new$ca_ind) %>%
+  glimpse
+
+add_dmets_ca_ind(
+  tables = tables_new,
+  cohort_ca_types = c("Non Small Cell Lung Cancer", "Lung Cancer, NOS")
 )

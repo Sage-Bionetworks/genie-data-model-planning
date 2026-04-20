@@ -96,6 +96,12 @@ multisite_list <- derive_dx_cpt_int(
   multisite_list
 )
 
+multisite_list <- add_dmets_ca_ind(
+  tables = multisite_list,
+  cohort_ca_types = c("Non Small Cell Lung Cancer", "Lung Cancer, NOS")
+)
+
+
 readr::write_rds(
   multisite_list,
   here(out_dir_dv, 'table_list.rds')
